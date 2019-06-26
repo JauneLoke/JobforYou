@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>{% block title %}Job&You{% endblock %}</title>
+        <!-- Google Tag Manager -->
+        <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+            })(window,document,'script','dataLayer','GTM-NTP49TJ');</script>
+        <!-- End Google Tag Manager -->
+        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+        <link rel="manifest" href="/site.webmanifest">
+        <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+        <meta name="msapplication-TileColor" content="#ffc40d">
+        <meta name="theme-color" content="#ffffff">
+        <meta name="description" content="Job&You, le premier Forum de l'Emploi, de l'Aprentissage et du Digital dans l'Est de la France qui propose la rencontre entre des employeurs et des candidats en incluant les nouvelles technologies.">
+        {% block stylesheets %}
+            <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}">
+            <link rel="stylesheet" href="{{ asset('assets/css/fontawesome-all.min.css') }}">
+            <link rel="stylesheet" href="{{ asset('assets/css/themify-icons.css') }}">
+            <link rel="stylesheet" href="{{ asset('assets/css/et-line.css') }}">
+            <link rel="stylesheet" href="{{ asset('assets/css/bootstrap-select.min.css') }}">
+            <link rel="stylesheet" href="{{ asset('assets/css/plyr.css') }}" />
+            <link rel="stylesheet" href="{{ asset('assets/css/flag.css') }}" />
+            <link rel="stylesheet" href="{{ asset('assets/css/slick.css') }}" />
+            <link rel="stylesheet" href="{{ asset('assets/css/owl.carousel.min.css') }}" />
+            <link rel="stylesheet" href="{{ asset('assets/css/jquery.nstSlider.min.css') }}"/>
+
+            <link rel="stylesheet" href="{{ asset('css/main.css') }}" />
+
+            <link href="https://fonts.googleapis.com/css?family=Poppins:400,500,600%7CRoboto:300i,400,500" rel="stylesheet">
+
+            <!--[if lt IE 9]>
+            <script src="{{ asset('assets/js/html5shiv.min.js') }}"></script>
+            <script src="{{ asset('assets/js/respond.min.js') }}"></script>
+            <![endif]-->
+        {% endblock %}
+    </head>
+    <body class="{{ app.request.attributes.get('_route') }}">
+        <!-- Google Tag Manager (noscript) -->
+        <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NTP49TJ"
+                        height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+        <!-- End Google Tag Manager (noscript) -->
+        {% block body %}{% endblock %}
+        {% block javascripts %}
+            <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+            <script src="{{ asset('assets/js/jquery.min.js') }}"></script>
+            <script src="{{ asset('assets/js/popper.min.js') }}"></script>
+            <script src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
+            <script src="{{ asset('assets/js/feather.min.js') }}"></script>
+            <script src="{{ asset('assets/js/bootstrap-select.min.js') }}"></script>
+            <script src="{{ asset('assets/js/jquery.nstSlider.min.js') }}"></script>
+            <script src="{{ asset('assets/js/owl.carousel.min.js') }}"></script>
+            <script src="{{ asset('assets/js/visible.js') }}"></script>
+            <script src="{{ asset('assets/js/jquery.countTo.js') }}"></script>
+            <script src="{{ asset('assets/js/chart.js') }}"></script>
+            <script src="{{ asset('assets/js/plyr.js') }}"></script>
+            <script src="{{ asset('assets/js/tinymce.min.js') }}"></script>
+            <script src="{{ asset('assets/js/slick.min.js') }}"></script>
+            <script src="{{ asset('assets/js/jquery.ajaxchimp.min.js') }}"></script>
+
+            <script src="{{ asset('js/custom.js') }}"></script>
+
+            <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC87gjXWLqrHuLKR0CTV5jNLdP4pEHMhmg"></script>
+            <script src="{{ asset('js/map.js') }}"></script>
+        {% endblock %}
+    </body>
+</html>

@@ -1,0 +1,119 @@
+{% extends 'backoffice/layout.html.twig' %}
+
+{% block dashboardContent %}
+    <div class="manage-job-container">
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Entreprise</th>
+                <th style="text-align: center">Surface souhaitée</th>
+                <th style="text-align: center">Date demande</th>
+                <th style="text-align: center">Status</th>
+                <th style="text-align: center" class="action">Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for entreprise in entreprises %}
+                <div class="modal fade" id="entrepriseInfo{{ entreprise.getId() }}" tabindex="-1" role="dialog" aria-labelledby="label{{ entreprise.getId() }}" aria-hidden="true">
+                    <div class="modal-dialog modal-lg" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="label{{ entreprise.getId() }}">Réservation de l'entreprise : {{ entreprise.getDenomination() }}</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body modal-lg">
+                                <div class="container-fluid">
+                                    <div class="row">
+                                        <div class="col-4">
+                                            <p><b style="color: #7c7c7c;">Dénomination ~ Nom de marque</b><br>
+                                            {{ entreprise.getDenomination() }} {{ entreprise.getNomMarque() }}</p>
+                                        </div>
+                                        <div class="col-4">
+                                            <p><b style="color: #7c7c7c;">Surface souhaitée en m²</b><br>
+                                        {{ entreprise.getSurface() }}</p>
+                                        </div>
+                                        <div class="col-4">
+                                            <p><b style="color: #7c7c7c;">Date de la demande de réservation</b><br>
+                                                {{ entreprise.getDateAdd()|date('\\L\\e d/m/Y \\à H:i') }}</p>
+                                        </div>
+                                        <hr style="width: 80%;height: 0px;background-color: #f3f3f3;" />
+                                        <div class="col-4">
+                                            <p><b style="color: #7c7c7c;">SIRET</b><br>
+                                            {{ entreprise.getSiret() }}</p>
+                                        </div>
+                                        <div class="col-4">
+                                            <p><b style="color: #7c7c7c;">Code NAF/APE</b><br>
+                                            {{ entreprise.getNafApe() }}</p>
+                                        </div>
+                                        <div class="col-4">
+                                        </div>
+                                        <div class="col-4">
+                                            <p><b style="color: #7c7c7c;">Adresse</b><br>
+                                            {{ entreprise.getAdresse() }}</p>
+                                        </div>
+                                        <div class="col-4">
+                                            <p><b style="color: #7c7c7c;">Code Postal</b><br>
+                                            {{ entreprise.getCodePostal() }}</p>
+                                        </div>
+                                        <div class="col-4">
+                                            <p><b style="color: #7c7c7c;">Ville</b><br>
+                                            {{ entreprise.getville() }}</p>
+                                        </div>
+                                        <hr style="width: 80%;height: 0px;background-color: #f3f3f3;" />
+                                        <div class="col-4">
+                                            <p><b style="color: #7c7c7c;">N° Téléphone</b><br>
+                                                {{ entreprise.getTelephone() }}</p>
+                                        </div>
+                                        <div class="col-4">
+                                            <p><b style="color: #7c7c7c;">E-mail</b><br>
+                                                {{ entreprise.getUser().getEmail() }}</p>
+                                        </div>
+                                        <div class="col-4">
+                                            <p><b style="color: #7c7c7c;">Site web (optionnel)</b><br>
+                                                {{ entreprise.getSiteweb() }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                                <button type="button" class="btn btn-danger"><a href="{{ path('dashboard_reservation_accept', {'idEntreprise': entreprise.getId(), 'result': 0}) }}" class="remove" onclick="return confirm('Voulez-vous vraiment refuser cette demande de stand ?');">Refuser</a></button>
+                                <button type="button" class="btn btn-success"><a href="{{ path('dashboard_reservation_accept', {'idEntreprise': entreprise.getId(), 'result': 1}) }}" class="edit" onclick="return confirm('Voulez-vous vraiment accepter cette demande de stand ? L\'entreprise recevra ses codes d\'accès.');">Approuver</a></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <tr class="job-items">
+                    <td class="title">
+                        <h5><a href="#">{{ entreprise.getDenomination() }} <i>{{ entreprise.getNomMarque() }}</i></a></h5>
+                        <div class="info">
+                            <span class="office-location"><i data-feather="map-pin"></i>{{ entreprise.getVille() }}</span><br/>
+                            <span class="job-type full-time"><a href="#"><i data-feather="phone"></i><a href="tel:{{ entreprise.getTelephone }}">{{ entreprise.getTelephone }}</a> | <a href="mailto:{{ entreprise.getUser().getEmail() }}">{{ entreprise.getUser().getEmail() }}</a></a></span>
+                        </div>
+                    </td>
+                    <td class="application" align="center"><span style="font-size: 20px;">{{ entreprise.getSurface() }}m²</span></td>
+                    <td class="deadline" align="center">{{ entreprise.getDateAdd()|date('d/m/Y H:i') }}</td>
+                    <td  align="center" class="status {% if entreprise.getReservationOk() is null %}pending{% elseif entreprise.getReservationOk() == false %}expired{% endif %}">{% if entreprise.getReservationOk() is null %}En attente{% elseif entreprise.getReservationOk() == false %}Refusé{% endif %}</td>
+                    <td class="action">
+                        <a href="javascript:void(0)" class="preview" data-toggle="modal" data-target="#entrepriseInfo{{ entreprise.getId() }}"><i data-feather="eye"></i></a><br/>
+                        {% if entreprise.getReservationOk() is null %}
+                            <a href="{{ path('dashboard_reservation_accept', {'idEntreprise': entreprise.getId(), 'result': 1}) }}" class="edit" onclick="return confirm('Voulez-vous vraiment accepter cette demande de stand ? L\'entreprise recevra ses codes d\'accès.');"><i data-feather="check"></i></a><br/>
+                            <a href="{{ path('dashboard_reservation_accept', {'idEntreprise': entreprise.getId(), 'result': 0}) }}" class="remove" onclick="return confirm('Voulez-vous vraiment refuser cette demande de stand ?');"><i data-feather="trash-2"></i></a>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        {% if pagination is defined and pagination.nbPages > 1 %}
+            {% include 'backoffice/pagination.html.twig' %}
+        {% endif %}
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+{% endblock %}

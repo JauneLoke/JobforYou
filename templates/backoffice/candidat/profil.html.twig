@@ -1,0 +1,93 @@
+{% extends 'backoffice/layout.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('assets/dashboard/css/bootstrap-tagsinput.css') }}">
+{% endblock %}
+
+{% block dashboardContent %}
+    <form action="{{ path('dashboard_candidat_profil') }}" method="POST" enctype="multipart/form-data" class="dashboard-form">
+        <div class="dashboard-section basic-info-input">
+            <h4><i data-feather="user-check"></i>Mon Profil</h4>
+            <p>Vous pouvez, ci-dessous, modifier les informations de votre profil, ces dernières sont visibles par les recruteurs.<br></p>
+            <div class="form-group row" style="margin-top: 30px"></div>
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label">Nom</label>
+                <div class="col-sm-9">
+                    <input type="text" name="nom" class="form-control" placeholder="Votre nom" value="{% if candidat.getNom() %}{{ candidat.getNom() }}{% elseif form_params.nom is defined %}{{ form_params.nom }}{% endif %}">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label">Prénom</label>
+                <div class="col-sm-9">
+                    <input type="text" name="prenom" class="form-control" placeholder="Votre prénom" value="{% if candidat.getPrenom() %}{{ candidat.getPrenom() }}{% elseif form_params.prenom is defined %}{{ form_params.prenom }}{% endif %}">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label">Téléphone</label>
+                <div class="col-sm-9">
+                    <input type="text" name="telephone" class="form-control" placeholder="Ex : 06 00 00 00 00" value="{% if candidat.getTelephone() %}{{ candidat.getTelephone() }}{% elseif form_params.telephone is defined %}{{ form_params.telephone }}{% endif %}">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label">Votre Ville</label>
+                <div class="col-sm-9">
+                    <input type="text" name="ville" class="form-control" placeholder="Ex : Belfort" value="{% if candidat.getVille() %}{{ candidat.getVille() }}{% elseif form_params.ville is defined %}{{ form_params.ville }}{% endif %}">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label">Votre Code Postal</label>
+                <div class="col-sm-9">
+                    <input type="number" name="code_postal" class="form-control" placeholder="Ex : 90000" value="{% if candidat.getCodePostal() %}{{ candidat.getCodePostal() }}{% elseif form_params.code_postal is defined %}{{ form_params.code_postal }}{% endif %}">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label">Description</label>
+                <div class="col-sm-9">
+                    <textarea type="number" name="description" class="form-control" placeholder="Ex : Je suis un apprentis informaticien, dynamique et passionner à la recherche d'un CDI...">{% if candidat.getDescription() %}{{ candidat.getDescription() }}{% endif %}</textarea>
+                </div>
+            </div>
+        </div>
+        <div class="dashboard-section basic-info-input">
+            <h4><i data-feather="lock"></i>Mon Compte</h4>
+            <p>Vous pouvez modifier ici les informations de votre compte, <b>nous recommandons un mot de passe d'au moins 6 caractères, dont un symbole.</b></p>
+            <p><b>Attention : </b>Votre adresse e-mail représente votre identifiant chez Job&You. En cas de modification de cette dernière, vous serez instantanément déconnecté par mesure de sécurité.</p><br>
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label">Adresse email</label>
+                <div class="col-sm-9">
+                    <input type="email" name="email" class="form-control" placeholder="email@exemple.com" value="{{ candidat.getUser().getEmail() }}">
+                </div>
+            </div>
+            <div class="col-12"></div>
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label">Mot de passe actuel</label>
+                <div class="col-sm-9">
+                    <input type="password" name="password" class="form-control" placeholder="Votre mot de passe actuel">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label">Nouveau mot de passe</label>
+                <div class="col-sm-9">
+                    <input type="password" name="newPassword" class="form-control" placeholder="Nouveau mot de passe">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label">Confirmation</label>
+                <div class="col-sm-9">
+                    <input type="password" name="newPasswordConfirm" class="form-control" placeholder="Confirmez votre nouveau mot de passe">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label"></label>
+                <div class="col-sm-9">
+                    <button class="button">Sauvegarder les modifications</button>
+                </div>
+            </div>
+        </div>
+    </form>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('assets/dashboard/js/bootstrap-tagsinput.js') }}"></script>
+{% endblock %}

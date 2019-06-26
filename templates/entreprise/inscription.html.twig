@@ -1,0 +1,180 @@
+{% extends 'layout.html.twig' %}
+
+{% block content %}
+     {{ parent() }}
+    <!-- Breadcrumb -->
+    <div class="alice-bg padding-top-40 padding-bottom-40">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="breadcrumb-area">
+                        <h1>Entreprise : Réserver votre stand</h1>
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="{{ path('homepage') }}">Accueil</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">Entreprises</li>
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Breadcrumb End -->
+
+    <div class="alice-bg section-padding-bottom">
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <div class="contact-block">
+                        <div class="row">
+                            <div class="col-12 col-lg-8">
+                                <p>Cher partenaire,</p>
+                                <p>Ce formulaire a pour objectif d'enregistrer votre demande de réservation de stand.</p>
+                                <p>Dès réception de votre demande, vous serez recontactés par nos équipes dans les 24h, pour les diverses modalités <i>(bon de commande et facture)</i>.</p>
+                                <p>Cette demande deviendra effective à réception du réglèment et au plus tard le <b>31 Mars 2019</b>.</p>
+                                <p>Vos codes d'accès à la plateforme vous serons adressés par e-mail dès validation de votre réservation par nos équipes. Vous pourrez dès réception, déposer vos offres d'emploi.</p>
+                                <p>Un kit d'organisation <i>(programme, repas, horaires d'installation ...)</i> vous sera adressé dans la semaine précédent l'événement.</p>
+                                <p>Nos équipes seront heureuses de vous accueillir et de vous accompagner tout au long de cet événement.</p>
+                                <p style="font-family: 'Poppins', sans-serif"><b>Job&You</b></p>
+                                <br><br>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="contact-address">
+                                    <h4>Besoin d'informations ?</h4>
+                                    <ul>
+                                        <li><i data-feather="map-pin"></i>L'AtraXion - Parc des expositions, ZAC des Prés, 90400 Andelnans du 9 au 10 Avril 2019</li>
+                                        <li><i data-feather="mail"></i>contact@jobandyou.fr</li>
+                                        <li><i data-feather="phone-call"></i>06 31 75 52 28</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="contact-form">
+                                    <form action="{{ path('entreprise_inscription') }}" method="post">
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <div class="form-group row" style="display: flex;align-items: center;">
+                                                    <label class="col-md-6 col-form-label required" style="font-size: 2.3rem;font-weight: 500;color: #646464;">Surface souhaitée en m² :<span class="required">*</span></label>
+                                                    <div class="col-md-6">
+                                                        <select name="surface" id="surface" class="form-control" style="font-size: 2.3rem">
+                                                            <option value="9">9m²</option>
+                                                            <option value="18">18m²</option>
+                                                            <option value="27">27m²</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            {% include 'priceBlock.html.twig' %}
+                                            <h4 class="col-12">Information sur votre entreprise</h4>
+                                            <div class="col-sm-6">
+                                                <div class="form-group form-float">
+                                                    <div class="form-line">
+                                                        <input type="email" class="form-control" name="email" required value="{% if formValues.email is defined %}{{ formValues.email }}{% endif %}">
+                                                        <label class="form-label">Adresse e-mail <span class="required">*</span></label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            {#<div class="col-sm-6">#}
+                                                {#<div class="form-group form-float">#}
+                                                    {#<div class="form-line">#}
+                                                        {#<input type="password" class="form-control" name="password" required value="{% if formValues.password is defined %}{{ formValues.password }}{% endif %}">#}
+                                                        {#<label class="form-label">Mot de passe <span class="required">*</span><a href="#" onclick="if($(this).text() == 'Afficher'){$(this).parent().prev().attr('type', 'text'); $(this).text('Masquer');}else{$(this).parent().prev().attr('type', 'password'); $(this).text('Afficher');} return false;" title="Afficher le mot de passe" style="margin-left: 10px;color: #007bff;">Afficher</a></label>#}
+                                                    {#</div>#}
+                                                {#</div>#}
+                                            {#</div>#}
+                                            <br/>
+                                            <div class="col-sm-6">
+                                                <div class="form-group form-float">
+                                                    <div class="form-line">
+                                                        <input type="text" class="form-control" name="denomination" required value="{% if formValues.denomination is defined %}{{ formValues.denomination }}{% endif %}">
+                                                        <label class="form-label">Dénomination <span class="required">*</span></label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <div class="form-group form-float">
+                                                    <div class="form-line">
+                                                        <input type="text" class="form-control" name="nomMarque" value="{% if formValues.nomMarque is defined %}{{ formValues.nomMarque }}{% endif %}">
+                                                        <label class="form-label">Nom commercial</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-8">
+                                                <div class="form-group form-float">
+                                                    <div class="form-line">
+                                                        <input type="text" class="form-control" name="adresse" required value="{% if formValues.adresse is defined %}{{ formValues.adresse }}{% endif %}">
+                                                        <label class="form-label">Adresse <span class="required">*</span></label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <div class="form-group form-float">
+                                                    <div class="form-line">
+                                                        <input type="text" class="form-control" name="codePostal" required value="{% if formValues.codePostal is defined %}{{ formValues.codePostal }}{% endif %}">
+                                                        <label class="form-label">Code postal <span class="required">*</span></label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-5">
+                                                <div class="form-group form-float">
+                                                    <div class="form-line">
+                                                        <input type="text" class="form-control" name="ville" required value="{% if formValues.ville is defined %}{{ formValues.ville }}{% endif %}">
+                                                        <label class="form-label">Ville <span class="required">*</span></label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <div class="form-group form-float">
+                                                    <div class="form-line">
+                                                        <input type="text" class="form-control" name="telephone" required value="{% if formValues.telephone is defined %}{{ formValues.telephone }}{% endif %}">
+                                                        <label class="form-label">N° Téléphone <span class="required">*</span></label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <div class="form-group form-float">
+                                                    <div class="form-line">
+                                                        <input type="text" class="form-control" name="siret" required value="{% if formValues.siret is defined %}{{ formValues.siret }}{% endif %}">
+                                                        <label class="form-label">Siret <span class="required">*</span></label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <div class="form-group form-float">
+                                                    <div class="form-line">
+                                                        <input type="text" class="form-control" name="nafApe" required value="{% if formValues.nafApe is defined %}{{ formValues.nafApe }}{% endif %}">
+                                                        <label class="form-label">Code NAF/APE <span class="required">*</span></label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <div class="form-group form-float">
+                                                    <div class="form-line">
+                                                        <input type="text" class="form-control" name="siteWeb" value="{% if formValues.siteWeb is defined %}{{ formValues.siteWeb }}{% endif %}">
+                                                        <label class="form-label">Site internet</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-12">
+                                                <div class="form-group">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck2" required name="agreeCgv">
+                                                        <label class="form-check-label" for="defaultCheck2">
+                                                            J'ai lu les <a href="{{ path('page', {viewName: 'conditions-generales-de-ventes'}) }}" target="_blank" style="color: #246df8;text-decoration: underline;">conditions générales de ventes</a> et j'y adhère sans réserve.
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <button class="button" style="float: right;">Soumettre ma demande</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,32 @@
+
+###> symfony/framework-bundle ###
+/.env.local
+/.env.local.php
+/.env.*.local
+/public/bundles/
+/var/
+/vendor/
+###< symfony/framework-bundle ###
+
+###> symfony/phpunit-bridge ###
+.phpunit
+/phpunit.xml
+###< symfony/phpunit-bridge ###
+
+###> symfony/web-server-bundle ###
+/.web-server-pid
+###< symfony/web-server-bundle ###
+
+
+composer.json
+composer.lock
+symfony.lock
+config/packages/dev/web_profiler.yaml
+public/.htaccess
+.vscode/
+/.idea
+Commandes Symfony 4.txt
+Squelette Symfony4.txt
+config/packages/twig_extensions.yaml
+public/images/company/4cb5a9b861032a4e4704958343cd8cb6.jpeg
+/.env

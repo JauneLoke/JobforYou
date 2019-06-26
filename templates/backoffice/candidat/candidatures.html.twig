@@ -1,0 +1,53 @@
+{% extends 'backoffice/layout.html.twig' %}
+
+{% block dashboardContent %}
+    <div class="manage-job-container">
+        <div class="dashboard-section basic-info-input">
+            <h4><i data-feather="user-check"></i> Mes candidatures</h4>
+            <p>Vous pouvez retouver l'ensemble des offres d'emploi auxquels vous avez postuler dans cette section.<br> 
+            Les recruteurs ont été informés de votre candidature</p>
+            <br>
+        </div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Intitulé du job</th>
+                    <th style="text-align: center">Entreprise</th>
+                    <th style="text-align: center">Lieu</th>
+                    <th style="text-align: center">Date de l'annonce</th>
+                    <th style="text-align: center">Status</th>
+                    <th style="text-align: center" class="action">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for candidature in candidatures %}
+                <tr class="job-items">
+                    <td class="title">
+                        <h6><a href="{{ path('emploi', {idEmploi: candidature.getEmplois().getId()})}}" target="_blank" title="Voir l'offre d'emploi">{{ candidature.getEmplois().getIntitule() }}</i></a></h6>
+                        <div class="info">
+                            <span class="job-type full-time"><i data-feather="clock"></i>{{ candidature.getEmplois().getTypeContrat().getLibelle() }}</span>
+                        </div>
+                    </td>
+                    <td class="title" align="center">{{ candidature.getEmplois().getEntreprise().getDenomination() }}</td>
+                    <td class="title" align="center">{{ candidature.getEmplois().getVille() }}</td>
+                    <td class="deadline" align="center">{{ candidature.getEmplois().getDateAdd()|date('d/m/Y H:i') }}</td>
+                    <td  align="center" class="status {% if candidature.getEmplois().getActive() == 1 %}active{% else %}pending{% endif %}">{% if candidature.getEmplois().getActive() == 1 %}En ligne{% else %}Horls ligne{% endif %}</td>
+                    <td class="action">
+                        <a href="{{ path('emploi', {idEmploi: candidature.getEmplois().getId()})}}" target="_blank" class="preview" title="Voir l'offre d'emploi"><i data-feather="eye"></i></a><br/>
+                        {# <a href="{{ path('dashboard_entreprise_post_candidatures', {Candidature: candidature.getId()}) }}" class="edit" title="Modifier"><i data-feather="edit-2"></i></a><br/> #}
+                        {# <a href="{{ path('dashboard_entreprise_delete_candidatures', {Candidature: candidature.getId()}) }}" class="remove" onclick="return(confirm('Voulez-vous vraiment supprimer cette offre d\'candidature ? Cette action est définitive.'));" title="Supprimer"><i data-feather="trash-2"></i></a><br/> #}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% if pagination is defined and pagination.nbPages > 1 %}
+            {% include 'backoffice/pagination.html.twig' %}
+        {% endif %}
+    </div> 
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+{% endblock %}

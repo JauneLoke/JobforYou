@@ -1,0 +1,104 @@
+{% extends 'layout.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('assets/dashboard/css/dashboard.css') }}" />
+{% endblock %}
+
+{% block content %}
+    <!-- Breadcrumb -->
+    <div class="alice-bg padding-top-40 padding-bottom-40">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="breadcrumb-area">
+                        <h1>Tableau de bord</h1>
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="{{ path('homepage') }}">Accueil</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">Tableau de bord</li>
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Breadcrumb End -->
+
+    {% for label, messages in app.flashes %}
+        {% for message in messages %}
+            <div class="jy-alert {{ label }}-alert">
+                <div class="icon">
+                    <i class="fas fa-{% if label == 'success' %}check-circle{% else %}exclamation-triangle{% endif %}"></i>
+                </div>
+                <p>{{ message|raw }}</p>
+                <div class="close_">
+                    <a href="#" onclick="$(this).parent().parent().remove(); return false;"><i class="fas fa-times"></i></a>
+                </div>
+            </div>
+        {% endfor %}
+    {% endfor %}
+
+    <div class="alice-bg section-padding-bottom">
+        <div class="container no-gliters">
+            <div class="row no-gliters">
+                <div class="col">
+                    <div class="dashboard-container">
+                        <div class="dashboard-content-wrapper">
+                            {% block dashboardContent %}{% endblock %}
+                        </div>
+                        <div class="dashboard-sidebar">
+                            <div class="company-info">
+                                <div class="thumb">
+                                    <img src="{% if is_granted('ROLE_ADMIN') %}
+                                        {{ asset('android-chrome-192x192.png') }}
+                                    {% elseif is_granted('ROLE_ENTREPRISE') %}
+                                        {% if app.user.getEntreprise().getLogo() is not empty %}{{ asset(app.user.getEntreprise().getLogo()) }}{% else %}{{ asset('images/register-box/2.png') }}{% endif %}
+                                    {% elseif is_granted('ROLE_CANDIDAT') %}
+                                        {{ asset('images/register-box/1.png') }}
+                                    {% endif %}" class="img-fluid" alt="">
+                                </div>
+                                <div class="company-body">
+                                    <h5>{% if is_granted('ROLE_ENTREPRISE') %}{{ app.user.getEntreprise().getDenomination() }}{% elseif is_granted('ROLE_CANDIDAT') %}{{ app.user.getCandidat().getPrenom() }}{% else %}Administrateur{% endif %}</h5>
+                                    <span>{% if is_granted('ROLE_ENTREPRISE') %}{{ app.user.getEntreprise().getNomMarque() }}{% elseif is_granted('ROLE_CANDIDAT') %}{{ app.user.getCandidat().getNom() }}{% endif %}</span>
+                                </div>
+                            </div>
+                            <div class="dashboard-menu">
+                                <ul>
+                                    <li {% if app.request.get('_route') == 'dashboard' %}class="active"{% endif %}><i class="fas fa-home"></i><a href="{{ path('dashboard') }}">Tableau de bord</a></li>
+                                    {% if is_granted('ROLE_ADMIN') %}
+                                        <li {% if app.request.get('_route') == 'dashboard_reservations' %}class="active"{% endif %}><i class="fas fa-briefcase"></i><a href="{{ path('dashboard_reservations') }}">Réservations soumises</a></li>
+                                        <li {% if app.request.get('_route') == 'dashboard_reservations_confirmees' %}class="active"{% endif %}><i class="fas fa-user"></i><a href="{{ path('dashboard_reservations_confirmees') }}">Entreprises inscrites</a></li>
+                                        {#<li><i class="fas fa-heart"></i><a href="#">Gestion des entreprises</a></li>#}
+                                        {#<li><i class="fas fa-users"></i><a href="#">Emplois</a></li>#}
+                                    {% endif %}
+
+                                    {% if is_granted('ROLE_ENTREPRISE') %}
+                                        <li {% if app.request.get('_route') == 'dashboard_entreprise_profil' %}class="active"{% endif %}><i class="fas fa-address-card"></i><a href="{{ path('dashboard_entreprise_profil') }}">Mon entreprise</a></li>
+                                        <li {% if app.request.get('_route') == 'dashboard_entreprise_post_emplois' %}class="active"{% endif %}><i class="fas fa-plus-square"></i><a href="{{ path('dashboard_entreprise_post_emplois') }}">Poster un job</a></li>
+                                        <li {% if app.request.get('_route') == 'dashboard_entreprise_emplois' %}class="active"{% endif %}><i class="fas fa-briefcase"></i><a href="{{ path('dashboard_entreprise_emplois') }}">Mes offres d'emploi</a></li>
+                                    {% endif %}
+
+                                    {% if is_granted('ROLE_CANDIDAT') %}
+                                        <li {% if app.request.get('_route') == 'dashboard_candidat_profil' %}class="active"{% endif %}><i class="fas fa-address-card"></i><a href="{{ path('dashboard_candidat_profil') }}">Mon Profil</a></li>
+                                        <li {% if app.request.get('_route') == 'dashboard_candidat_competences' %}class="active"{% endif %}><i class="fas fa-plus-square"></i><a href="{{ path('dashboard_candidat_post_competences') }}">Mon CV</a></li>
+                                        <li {% if app.request.get('_route') == 'dashboard_entreprise_emplois' %}class="active"{% endif %}><i class="fas fa-briefcase"></i><a href="{{ path('dashboard_candidat_candidatures') }}">Mes candidatures</a></li>
+                                    {% endif %}
+                                </ul>
+                                <ul class="delete">
+                                    <li><i class="fas fa-power-off"></i><a href="{{ path('logout') }}">Déconnexion</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('assets/dashboard/js/dashboard.js') }}"></script>
+{% endblock %}

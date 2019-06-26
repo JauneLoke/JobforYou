@@ -1,0 +1,160 @@
+{% extends 'layout.html.twig' %}
+
+{% block content %}
+    {{ parent() }}
+    <!-- Breadcrumb -->
+    <div class="alice-bg padding-top-40 padding-bottom-40">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="breadcrumb-area">
+                        <h1>Job & You</h1>
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="{{ path('homepage') }}">Accueil</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">Le Forum</li>
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Breadcrumb End -->
+
+    <!-- Candidates Details -->
+    <div class="alice-bg section-padding-bottom">
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <div class="white-bg others-block">
+                        <div class="about-company">
+                            <div class="row">
+                                <div class="col-lg-6 order-lg-2">
+                                    <div class="feature-thumb">
+                                        <a href="{{ asset('images/plan-forum-job&you.png') }}" target="_blank" attr="Plan Forum Job&You" title="Plan Forum Job&You">
+                                            <img src="{{ asset('images/plan-forum-job&you.png') }}" style="border: 1px solid #e9e9e9;border-radius: 7px" class="img-fluid" alt="Plan du Forum Job&you">
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 order-lg-1">
+                                    <div class="feature-content">
+                                        <h3>Le 1<sup>er</sup> Forum de l'Emploi, de l'Apprentissage et du Digital</h3>
+                                        <p>Participez à Job&You, le 1er Forum de l’Emploi, de l’Apprentissage et du Digital dans l’Est de la France qui propose la rencontre entre les employeurs et les candidats en incluant les nouvelles technologies.</p>
+                                        <p>Avec Job&You, bénéficiez des connexions d’un véritable réseau composé d’acteurs et décideurs professionnels. </p>
+                                        <p>Avec Job&You, profitez d’outils digitaux adaptés à l’accompagnement, au suivi et à la formation avec nos équipes lors de l’événement.</p>
+                                        <p>Job&You, c’est aussi des solutions de valorisation par des techniques numériques, et ce, tout au long de l’année.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-10 offset-1 forum-block">
+                            <h5>Je suis un candidat ...</h5>
+                            <div class="infobox-wrap">
+                                <div class="row">
+                                    <div class="col-lg-4 col-md-6">
+                                        <div class="info-box">
+                                            <div class="icon">
+                                                <i data-feather="cast" style="color:#35c38f;"></i>
+                                            </div>
+                                            <h4>Je trouve un job</h4>
+                                            <p>En seulement trois clics, j'accède à des offres d'emploi disponibles où je pourrai rencontrer directement le recruteur</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4 col-md-6">
+                                        <div class="info-box">
+                                            <div class="icon">
+                                                <i data-feather="layout" style="color:#35c38f;"></i>
+                                            </div>
+                                            <h4>Une formation</h4>
+                                            <p>Je peux rencontrer des conseillers sur les ateliers pour m'accompagner dans ma démarche</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4 col-md-6">
+                                        <div class="info-box">
+                                            <div class="icon">
+                                                <i data-feather="compass" style="color:#35c38f;"></i>
+                                            </div>
+                                            <h4>Un apprentissage</h4>
+                                            <p>Je viens découvrir des offres dédiées à l'aprentissage ainsi que certains CFA de la région</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-12" style="text-align: center">
+                                        <a href="{{ path('emplois') }}" title="Trouver un job" class="button" style="background: #35c38f;">Trouver un job</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-10 offset-1 forum-block">
+                            <h5>Je suis un employeur ...</h5>
+                            <div class="infobox-wrap">
+                                <div class="row">
+                                    <div class="col-lg-4 col-md-6">
+                                        <div class="info-box">
+                                            <div class="icon">
+                                                <i data-feather="cast"></i>
+                                            </div>
+                                            <h4>Je poste un job</h4>
+                                            <p>En seulement trois clics, je diffuse mon offre sur une douzaine de JobBoard et sur la plateforme</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4 col-md-6">
+                                        <div class="info-box">
+                                            <div class="icon">
+                                                <i data-feather="layout"></i>
+                                            </div>
+                                            <h4>Je recrute les bons profils</h4>
+                                            <p>J'ai accès à une CVthèque, répertoriant l'ensemble des candidats enregistrés sur la plateforme</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4 col-md-6">
+                                        <div class="info-box">
+                                            <div class="icon">
+                                                <i data-feather="compass"></i>
+                                            </div>
+                                            <h4>Je suis présent au Forum</h4>
+                                            <p>Je communique localement, je diffuse une image dynamique de mon entreprise et je rencontre des candidats</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-12" style="text-align: center">
+                                        <a href="{{ path('entreprise_inscription') }}" title="Réserver un stand" class="button">Réserver un stand</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="padding-top-70 padding-bottom-70">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="call-to-action-box candidate-box">
+                                            <div class="icon">
+                                                <img src="images/register-box/1.png" alt="">
+                                            </div>
+                                            <span>Vous êtes un</span>
+                                            <h3>Candidat ?</h3>
+                                            <a href="#" data-toggle="modal" data-target="#exampleModalLong2">Inscrivez-vous <i class="fas fa-arrow-right"></i></a>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="call-to-action-box employer-register">
+                                            <div class="icon">
+                                                <img src="images/register-box/2.png" alt="">
+                                            </div>
+                                            <span>Vous êtes un</span>
+                                            <h3>Employeur ?</h3>
+                                            <a href="{{ path('entreprise_inscription') }}" title="Réserver un stand">Réserver un stand <i class="fas fa-arrow-right"></i></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Candidates Details End -->
+{% endblock %}
+

@@ -1,0 +1,162 @@
+{% extends 'layout.html.twig' %}
+
+{% block content %}
+    {{ parent() }}
+    <!-- Breadcrumb -->
+    <div class="alice-bg padding-top-40 padding-bottom-40">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="breadcrumb-area">
+                        <h1>Job & You</h1>
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="{{ path('homepage') }}">Accueil</a></li>
+                                <li class="breadcrumb-item"><a href="{{ path('emplois') }}">Trouver un job</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">{{ emploi.getIntitule() }} chez {{ emploi.getEntreprise().getDenomination()|upper }}</li>
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Breadcrumb End -->
+
+    <!-- Candidates Details -->
+    <div class="alice-bg padding-top-60 section-padding-bottom">
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <div class="job-listing-details">
+                        <div class="job-title-and-info">
+                            <div class="title">
+                                <div class="thumb">
+                                    <img src="{% if emploi.getEntreprise().getLogo() is not empty %}{{ asset(emploi.getEntreprise().getLogo()) }}{% else %}{{ asset('images/register-box/2.png') }}{% endif %}" class="img-fluid" alt="Logo de {{ emploi.getEntreprise().getDenomination()|upper }}">
+                                </div>
+                                <div class="title-body">
+                                    <h4>{{ emploi.getIntitule() }}</h4>
+                                    <div class="info">
+                                        <span class="company"><a href="#"><i data-feather="briefcase"></i>{{ emploi.getEntreprise().getDenomination()|upper }}</a></span>
+                                        <span class="office-location"><a href="#"><i data-feather="map-pin"></i>{{ emploi.getVille()|upper }}</a></span>
+                                        <span class="job-type full-time"><a href="#"><i data-feather="clock"></i>{{ emploi.getTypeContrat().getLibelle() }}</a></span>
+                                    </div>
+                                </div>
+                            </div>
+                            {% if is_granted('ROLE_CANDIDAT') %}
+                                <div class="buttons" data-toggle="modal" data-target="#exampleModal">
+                                    {#<a class="save" href="#"><i data-feather="heart"></i>Save Job</a>#}
+                                    <a class="apply" href="#">Postuler</a>
+                                </div>
+                            {% endif %}
+                        </div>
+                        <div class="details-information section-padding-60">
+                            <div class="row">
+                                <div class="col-xl-7 col-lg-8">
+                                    <div class="description details-section">
+                                        <h4><i data-feather="align-left"></i>Description du job</h4>
+                                        <p>{{ emploi.getDescription()|nl2br }}</p>
+                                    </div>
+                                    <div class="responsibilities details-section">
+                                        <h4><i data-feather="zap"></i>Compétences</h4>
+                                        <ul>
+                                            {% for competence in emploi.getResponsabilite()|split(',') %}
+                                                <li>{{ competence }}</li>
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
+                                    <div class="edication-and-experience details-section">
+                                        <h4><i data-feather="book"></i>Formation souhaités</h4>
+                                        <ul>
+                                            {% for formation in emploi.getEtude()|split(',') %}
+                                                <li>{{ formation }}</li>
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
+                                    <div class="other-benifit details-section">
+                                        <h4><i data-feather="gift"></i>Avantages</h4>
+                                        <ul>
+                                            {% for avantage in emploi.getAvantage()|split(',') %}
+                                                <li>{{ avantage }}</li>
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
+                                    {% if is_granted('ROLE_CANDIDAT') %}
+                                        <div class="job-apply-buttons" data-toggle="modal" data-target="#exampleModal">
+                                            <a href="#" class="apply">Postuler</a>
+                                            {#<a href="#" class="email"><i data-feather="mail"></i>Email Job</a>#}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                                <div class="col-xl-4 offset-xl-1 col-lg-4">
+                                    <div class="information-and-share">
+                                        <div class="job-summary">
+                                            <h4>Résumé du Job</h4>
+                                            <ul>
+                                                <li><span>Publié le :</span> {{ emploi.getDateAdd()|date('d/m/Y') }}</li>
+                                                <li><span>Type de contrat :</span> {{ emploi.getTypeContrat().getLibelle() }}</li>
+                                                <li><span>Expérience souhaité:</span> {{ emploi.getTypeExperience().getLibelle() }}</li>
+                                                <li><span>Lieu de travail :</span> {{ emploi.getVille()|upper }}</li>
+                                                <li><span>Salaire <b>Brut</b>:</span> environ ~ {{ emploi.getSalaireBrut() }}€/mois</li>
+                                            </ul>
+                                        </div>
+                                        <div class="share-job-post">
+                                            <span class="share"><i class="fas fa-share-alt"></i>Partager :</span>
+                                            <a href="https://www.facebook.com/sharer.php?u={{ ('https://jobandyou.fr' ~ path('emploi', {idEmploi: emploi.getId()}))|url_encode }}&title={{ (emploi.getIntitule() ~ ' - Job&You')|url_encode }}&description={{ emploi.getDescription()|truncate(100, '')|url_encode }}" onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=500,width=700');return false;"><i class="fab fa-facebook-f"></i></a>
+                                            <a href="https://twitter.com/share?url={{ ('https://jobandyou.fr' ~ path('emploi', {idEmploi: emploi.getId()}))|url_encode }}&text={{ (emploi.getIntitule() ~ ' - Job&You')|url_encode }}" onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=500,width=700');return false;"><i class="fab fa-twitter"></i></a>
+                                            <a href="https://www.linkedin.com/shareArticle?mini=true&url={{ ('https://jobandyou.fr' ~ path('emploi', {idEmploi: emploi.getId()}))|url_encode }}&title={{ (emploi.getIntitule() ~ ' - Job&You')|url_encode }}" onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=500,width=700');return false;"><i class="fab fa-linkedin-in"></i></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xl-7 col-lg-8">
+                                <div class="company-information details-section">
+                                    <h4><i data-feather="briefcase"></i>À propos de l'entreprise</h4>
+                                    <ul>
+                                        <li><span>Nom :</span> {{ emploi.getEntreprise().getDenomination()|upper }}</li>
+                                        {% if emploi.getEntreprise().getSiteWeb() %}
+                                            <li><span>Site internet :</span> <a href="{{ emploi.getEntreprise().getSiteWeb() }}">{{ emploi.getEntreprise().getSiteWeb() }}</a></li>
+                                        {% endif %}
+                                        {% if emploi.getEntreprise().getSecteursActivites() %}
+                                            <li><span>Secteurs d'activités : </span> {{ emploi.getEntreprise().getSecteursActivites()|replace({',': ', '}) }}</li>
+                                        {% endif %}
+                                        <li><span>Description de l'entreprise : </span></li>
+                                        <li>{{ emploi.getEntreprise().getDescription()|nl2br }}</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-xl-5 col-lg-4" style="align-items: center;display: flex;justify-content: center;">
+                                <img src="{% if emploi.getEntreprise().getLogo() is not empty %}{{ asset(emploi.getEntreprise().getLogo()) }}{% else %}{{ asset('images/register-box/2.png') }}{% endif %}" alt="Logo de {{ emploi.getEntreprise().getDenomination()|upper }}" style="max-width: 200px">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Candidates Details End -->
+
+    {% block modal %}
+        <!-- Modal Contact -->
+        <div class="modal fade contact-form-modal" id="exampleModal" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <h4><i data-feather="edit"></i>Postulez à ce Job</h4>
+                        <form action="{{ path('candidat_candidature') }}" method="POST" enctype="multipart/form-data">
+                            <input type="hidden" name="idEmploi" value='{{ emploi.getId() }}'>
+                            <label for="description">Message à destination du recruteur :</label>
+                            <div class="form-group">
+                                <textarea name='description' class="form-control" placeholder="Ex : Bonjour, votre offre d'emploi m'intéresse, je possède une bonne expérience dans ce domaine et je suis disponible immédiatement ..."></textarea>
+                            </div>
+                            <button class="button">Postuler</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endblock modal %}
+
+{% endblock %}

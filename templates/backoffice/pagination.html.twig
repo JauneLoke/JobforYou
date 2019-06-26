@@ -1,0 +1,18 @@
+{% if pagination is defined %}
+    <div class="pagination-list text-center">
+        <nav class="navigation pagination">
+            <div class="nav-links">
+                <a class="prev page-numbers" href="{% if pagination.page > 1 %}{{ path(pagination.nomRoute,
+                    pagination.paramsRoute|merge({'page': pagination.page-1})) ~ '?' ~ pagination.query }}{% else %}javascript:void(0){% endif %}"><i class="fas fa-angle-left"></i></a>
+
+                {% for p in range(max(pagination.page-4, 1), min(pagination.page+4, pagination.nbPages)) %}
+                    <a href="{% if p != pagination.page %}{{ path(pagination.nomRoute, pagination.paramsRoute|merge({'page': p})) ~ '?' ~ pagination.query }}{% else %}javascript:void(0){% endif %}" class="page-numbers {% if p == pagination.page %}current disabled{% endif %}">
+                        {{ p }}
+                    </a>
+                {% endfor %}
+                <a class="next page-numbers" href="{% if pagination.page < pagination.nbPages %}{{ path(pagination.nomRoute,
+                    pagination.paramsRoute|merge({'page': pagination.page+1})) ~ '?' ~ pagination.query }}{% else %}javascript:void(0){% endif %}"><i class="fas fa-angle-right"></i></a>
+            </div>
+        </nav>
+    </div>
+{% endif %}

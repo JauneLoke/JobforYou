@@ -1,0 +1,54 @@
+{% extends 'layout.html.twig' %}
+
+{% block content %}
+    {{ parent() }}
+    <div class="row" style="background: #f8f9fa;padding: 20px 0;margin: 0 !important;">
+        <div class="col-12 col-lg-6" style="display: flex;align-items: center;justify-content: center">
+            <div class="searchAndFilter-wrapper" id="homepageSAF">
+                <div class="col-10 offset-1">
+                    <img id="homepage-comin" src="{{ asset('images/g28.png') }}" alt="Venez ! On s'en fiche de la photo sur votre CV" title="Venez ! On s'en fiche de la photo sur votre CV">
+                    <p class="homepage-paragraphe">Participez à Job&You, le 1er Forum de l’Emploi, de l’Apprentissage et du Digital dans l’Est de la France qui propose la rencontre entre les employeurs et les candidats en incluant les nouvelles technologies.</p>
+                </div>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-10 offset-1">
+                            <div class="searchAndFilter-block">
+                                <div class="searchAndFilter">
+                                    {% if is_granted('ROLE_ENTREPRISE') == false and is_granted('ROLE_CANDIDAT') == false %}
+                                        <div class="row">
+                                                <div class="col-lg-12" style="margin: 20px 0;">
+                                                    <div class="call-to-action-box candidate-box">
+                                                        <div class="icon">
+                                                            <img src="images/register-box/1.png" alt="">
+                                                        </div>
+                                                        <span>Vous êtes un</span>
+                                                        <h3>Candidat ?</h3>
+                                                        <a href="#" data-toggle="modal" data-target="#exampleModalLong2">Inscrivez-vous <i class="fas fa-arrow-right"></i></a>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-12">
+                                                    <div class="call-to-action-box employer-register">
+                                                        <div class="icon">
+                                                            <img src="images/register-box/2.png" alt="">
+                                                        </div>
+                                                        <span>Vous êtes un</span>
+                                                        <h3>Employeur ?</h3>
+                                                        <a href="{{ path('entreprise_inscription') }}" title="Réserver un stand">Réservez votre stand <i class="fas fa-arrow-right"></i></a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Registration Box End -->
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="col-12 col-lg-6" style="text-align: center;display: flex;align-items: center;">
+            <a href="{{ path('forum') }}" title="Le Forum"><img class='imageHome' src="{{ asset('images/jobandyou' ~ (random(3)+1) ~ '.jpg') }}" alt="Job&You" style="max-width: 85%"></a>
+        </div>
+    </div>
+{% endblock %}

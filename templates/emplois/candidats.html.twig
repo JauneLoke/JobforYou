@@ -1,0 +1,143 @@
+{% extends 'layout.html.twig' %}
+
+{% block content %}
+    {{ parent() }}
+    <!-- Breadcrumb -->
+    <div class="alice-bg padding-top-40 padding-bottom-40">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="breadcrumb-area">
+                        <h1>Job & You</h1>
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="{{ path('homepage') }}">Accueil</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">Trouver le salarié idéal</li>
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Breadcrumb End -->
+
+    <!-- Job Listing -->
+    <div class="alice-bg section-padding-bottom">
+        <div class="container">
+            <div class="row no-gutters">
+                <div class="col">
+                    <div class="job-listing-container">
+                        <div class="row">
+                            <div class="col-lg-3">
+                                <form action="{{ path('candidats') }}" method="get">
+                                    <div class="job-filter-wrapper">
+                                        <div class="search-bar">
+                                            <div class="form-group row">
+                                                <label class="col-12 col-form-label">Rechercher</label>
+                                                <div class="col-12">
+                                                    <input type="text" class="form-control" name="s" placeholder="Charpentier ..." value="">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row search-bar-container">
+                                            <div class="col-12">
+                                                <button class="button" type="submit">Filtrer</button>
+                                            </div>
+                                        </div>
+                                        <div class="selected-options">
+                                            <div class="selection-title">
+                                                <h4>Votre sélection</h4>
+                                                <a href="#">Effacer</a>
+                                            </div>
+                                            <ul class="filtered-options">
+                                            </ul>
+                                        </div>
+                                        <div data-id="job-type" class="job-filter job-type">
+                                            <h4 class="option-title">Type de contrat</h4>
+
+
+                                        </div>
+                                        <div data-id="experience" class="job-filter experience">
+                                            <h4 class="option-title">Expérience</h4>
+                                            <ul>
+
+        
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="col-lg-9">
+                                <div class="filtered-job-listing-wrapper">
+                                    <div class="job-view-controller-wrapper">
+                                        <div class="job-view-controller">
+                                            <div class="controller list active">
+                                                <i data-feather="menu"></i>
+                                            </div>
+                                            <div class="controller grid">
+                                                <i data-feather="grid"></i>
+                                            </div>
+                                            <div class="job-view-filter">
+                                                <select class="selectpicker">
+                                                    <option value="dateAdd" selected>Plus récent en premier</option>
+                                                    <option value="visited">Plus populaire en premier</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="showing-number">
+                                            <span>Trouver le salarié idéal !</span>
+                                        </div>
+                                    </div>
+                                    <div class="job-filter-result">
+                                        {% if candidats %}
+                                            {% for candidat in candidats %}
+                                                <div class="job-list">
+                                                    <div class="body">
+                                                        <div class="content">
+                                                            <h4><a href="{{ path('candidat', {idCandidat: candidat.getId()}) }}">{{ candidat.getNom() }}</a></h4>
+                                                            <div class="info">
+                                                                <span class="company"><a href="#"><i data-feather="briefcase"></i>{{ candidat.getPrenom()|upper }}</a></span>
+                                                                <span class="office-location"><a href="#"><i data-feather="map-pin"></i>{{ candidat.getVille()|upper }}</a></span>
+                                                                <span class="job-type full-time"><a href="#"><i data-feather="clock"></i>{{ candidat.getDescription() }}</a></span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            {% endfor %}
+                                        {% else %}
+                                        {% endif %}
+                                    </div>
+                                    {% include 'backoffice/pagination.html.twig' %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Job Listing End -->
+
+    <!-- Call to Action -->
+    <div class="call-to-action-bg padding-top-90 padding-bottom-90">
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <div class="call-to-action-2">
+                        <div class="call-to-action-content">
+                            <h2>Pour trouver l'emploi ou le candidat de vos rêves</h2>
+                        </div>
+                        <div class="call-to-action-button">
+                            <a href="javascript:void(0)" class="button" title="Bientôt disponible ...">Ajouter votre CV</a>
+                            <span>Ou</span>
+                            <a href="{{ path('dashboard_entreprise_post_emplois') }}" class="button">Poster un job</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Call to Action End -->
+{% endblock %}
+

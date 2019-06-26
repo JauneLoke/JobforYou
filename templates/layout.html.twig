@@ -1,0 +1,329 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <!-- Header -->
+    <header {% if app.request.get('_route') != 'homepage' %}class="header-2" {% endif %}>
+        <nav class="navbar navbar-expand-xl absolute-nav transparent-nav cp-nav navbar-light bg-light fluid-nav">
+            <a class="navbar-brand" href="{{ path('homepage') }}">
+                <img src="{{ asset('images/job&you_logo.png') }}" width="164px" class="img-fluid" alt="">
+            </a>
+            <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ml-auto main-nav">
+                    <li class="menu-item active"><a title="Accueil" href="{{ path('homepage') }}">Accueil</a></li>
+
+                    <li class="menu-item dropdown">
+                        <a title="" href="javascript:void(0)" data-toggle="dropdown" class="dropdown-toggle" aria-haspopup="true" aria-expanded="false">Candidat</a>
+                        <ul  class="dropdown-menu">
+                            <li class="menu-item"><a title="Trouver un job" href="{{ path('emplois') }}">Trouver un job</a></li>
+                            <li class="menu-item"><a title="Entreprises présentes au Forum Job&You" href="{{ path('entreprises') }}">Liste des entreprises</a></li>
+                        </ul>
+                    </li>
+                    {% if is_granted('ROLE_CANDIDAT') == false %}
+                    <li class="menu-item dropdown">
+                        <a title="" href="javascript:void(0)" data-toggle="dropdown" class="dropdown-toggle" aria-haspopup="true" aria-expanded="false">Entreprise</a>
+                        <ul  class="dropdown-menu">
+                            <li class="menu-item"><a title="Réserver un stand" href="{{ path('entreprise_inscription') }}">Réserver un stand</a></li>
+                            <li class="menu-item"><a title="Bientôt disponible ..." href="javascript:void(0)">Trouver un profil</a></li>
+                        </ul>
+                    </li>
+                    {% endif %}
+                    {% if is_granted('ROLE_CANDIDAT') == false %}
+                        <li class="menu-item"><a title="Le forum" href="{{ path('forum') }}">Le forum</a></li>
+                        {% if is_granted('ROLE_ADMIN') == false %}
+                            <li class="menu-item post-job"><a title="Poster un job" href="{% if is_granted('ROLE_ENTREPRISE') %}{{ path('dashboard_entreprise_post_emplois') }}{% else %}{{ path('entreprise_inscription') }}{% endif %}"><i class="fas fa-plus"></i>Poster un job</a></li>
+                        {% endif %}
+                    {% endif %}
+                </ul>
+                <ul class="navbar-nav ml-auto account-nav">
+                    {#<li class="dropdown menu-item header-top-notification">#}
+                    {#<a href="javascript:void(0)" class="notification-button"></a>#}
+                    {#<div class="notification-card">#}
+                    {#<div class="notification-head">#}
+                    {#<span>Notifications</span>#}
+                    {#<a href="javascript:void(0)">Mark all as read</a>#}
+                    {#</div>#}
+                    {#<div class="notification-body">#}
+                    {#<a href="home-2.html" class="notification-list">#}
+                    {#<i class="fas fa-bolt"></i>#}
+                    {#<p>Your Resume Updated!</p>#}
+                    {#<span class="time">5 hours ago</span>#}
+                    {#</a>#}
+                    {#<a href="javascript:void(0)" class="notification-list">#}
+                    {#<i class="fas fa-arrow-circle-down"></i>#}
+                    {#<p>Someone downloaded resume</p>#}
+                    {#<span class="time">11 hours ago</span>#}
+                    {#</a>#}
+                    {#<a href="javascript:void(0)" class="notification-list">#}
+                    {#<i class="fas fa-check-square"></i>#}
+                    {#<p>You applied for Project Manager <span>@homeland</span></p>#}
+                    {#<span class="time">11 hours ago</span>#}
+                    {#</a>#}
+                    {#<a href="javascript:void(0)" class="notification-list">#}
+                    {#<i class="fas fa-user"></i>#}
+                    {#<p>You changed password</p>#}
+                    {#<span class="time">5 hours ago</span>#}
+                    {#</a>#}
+                    {#<a href="javascript:void(0)" class="notification-list">#}
+                    {#<i class="fas fa-arrow-circle-down"></i>#}
+                    {#<p>Someone downloaded resume</p>#}
+                    {#<span class="time">11 hours ago</span>#}
+                    {#</a>#}
+                    {#</div>#}
+                    {#<div class="notification-footer">#}
+                    {#<a href="javascript:void(0)">See all notification</a>#}
+                    {#</div>#}
+                    {#</div>#}
+                    {#</li>#}
+                    {% if app.user %}
+                        <li class="menu-item"><a title="Tableau de bord" href="{{ path('dashboard') }}">Mon Compte</a></li>
+                        <li class="menu-item dropdown">
+                            <a title="Mon compte" href="javascript:void(0)" data-toggle="dropdown" class="dropdown-toggle" aria-haspopup="true" aria-expanded="false">
+                                <div class="thumb">
+                                    <img src="
+                                        {% if is_granted('ROLE_ADMIN') %}
+                                            {{ asset('android-chrome-192x192.png') }}
+                                        {% elseif is_granted('ROLE_ENTREPRISE') %}
+                                            {% if app.user.getEntreprise().getLogo() is not empty %}{{ asset(app.user.getEntreprise().getLogo()) }}{% else %}{{ asset('images/register-box/2.png') }}{% endif %}
+                                        {% elseif is_granted('ROLE_CANDIDAT') %}
+                                            {{ asset('images/register-box/1.png') }}
+                                        {% endif %}" class="img-fluid" alt="">
+                                </div>
+                                {% if is_granted('ROLE_ADMIN') %}
+                                    Administrateur
+                                {% elseif is_granted('ROLE_ENTREPRISE') %}
+                                    {{ app.user.getEntreprise().getDenomination() }}
+                                {% elseif is_granted('ROLE_CANDIDAT') %}
+                                    {{ app.user.getCandidat().getPrenom() }}
+                                {% endif %}</a>
+                            <ul  class="dropdown-menu">
+                                <li class="menu-item"><a title="Déconnexion" href="{{ path('logout') }}" style="color: red;">Déconnexion</a></li>
+                            </ul>
+                        </li>
+                    {% else %}
+                        <li class="menu-item login-popup"><button title="Title" type="button" data-toggle="modal" data-target="#login">Connexion</button></li>
+                    {% endif %}
+                </ul>
+            </div>
+        </nav>
+        <!-- Modal -->
+        <div class="account-entry">
+            <div class="modal fade" id="login" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title"><i data-feather="user"></i>Connexion</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="account-type">
+                                    <a href="javascript:void(0)" class="candidate-acc active"><i data-feather="user"></i>Candidat</a>
+                                    <a href="javascript:void(0)" class="employer-acc"><i data-feather="briefcase"></i>Entreprise</a>
+                                </div>
+                                <form action="{{ path('login_check') }}" method="post">
+                                    <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+                                    <div class="form-group">
+                                        <input type="email" name="_username" placeholder="Adresse e-mail" class="form-control">
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="password" name="_password" placeholder="Mot de passe" class="form-control">
+                                    </div>
+                                    <div class="more-option">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" checked="checked" name="_remember_me" value="" id="defaultCheck1">
+                                            <label class="form-check-label" for="defaultCheck1">
+                                                Se souvenir de moi
+                                            </label>
+                                        </div>
+                                        <a href="{{ path('forgot_password') }}">Mot de passe oublié ?</a>
+                                    </div>
+                                    <button class="button primary-bg btn-block" type="submit">Connexion</button>
+                                </form>
+                            </div>
+                        </div>
+                </div>
+            </div>
+            <div class="modal fade" id="exampleModalLong2" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title"><i data-feather="edit"></i>Inscription candidat</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form action="{{ path('candidat_inscription') }}" method="POST" >
+                                <div class="form-group">
+                                    <input type="text" name="nom" placeholder="Votre nom" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" name="prenom" placeholder="Votre prénom" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <input type="email" name="email" placeholder="Votre adresse e-mail" class="form-control" required value="{% if formValues.email is defined %}{{ formValues.email }}{% endif %}">
+                                </div>
+                                <div class="form-group">
+                                    <input type="password" name="password" placeholder="Votre mot de passe" class="form-control">
+                                </div>
+                                <button class="button primary-bg btn-block" title="Inscrivez-vous">S'inscrire</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- Header End -->
+    <div class="alice-bg" style="padding-top: 20px;">
+        <div class="container">
+            {% for label, messages in app.flashes %}
+                {% for message in messages %}
+                    <div class="jy-alert {{ label }}-alert" {% if app.request.get('_route') == 'homepage' %}style="margin-left: 65px;"{% endif %}>
+                        <div class="icon">
+                            <i class="fas fa-{% if label == 'success' %}check-circle{% else %}exclamation-triangle{% endif %}"></i>
+                        </div>
+                        <p>{{ message|raw }}</p>
+                        <div class="close_">
+                            <a href="javascript:void(0)" onclick="$(this).parent().parent().remove(); return false;"><i class="fas fa-times"></i></a>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% endfor %}
+        </div>
+    </div>
+
+    {% block content %}
+
+    {% endblock %}
+
+    {% block modal %}
+
+    {% endblock modal %}
+
+    {% block footer %}
+        <!-- Footer -->
+        <footer class="footer-bg">
+            <div class="footer-top border-bottom padding-bottom-40">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="footer-logo">
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 col-12 offset-md-6">
+                            <div class="footer-social">
+                                <ul class="social-icons">
+                                    <li><a href="javascript:void(0)"><i data-feather="facebook"></i></a></li>
+                                    <li><a href="javascript:void(0)"><i data-feather="twitter"></i></a></li>
+                                    <li><a href="javascript:void(0)"><i data-feather="linkedin"></i></a></li>
+                                    <li><a href="javascript:void(0)"><i data-feather="instagram"></i></a></li>
+                                    <li><a href="javascript:void(0)"><i data-feather="youtube"></i></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-widget-wrapper padding-bottom-60 padding-top-80">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-4 col-sm-6">
+                            <div class="footer-widget widget-about">
+                                <h4>À propos du Forum</h4>
+                                <div class="widget-inner">
+                                    <p class="description">Job&You, le premier Forum de l'Emploi, de l'Aprentissage et du Digital dans l'Est de la France qui propose la rencontre entre des employeurs et des candidats en incluant les nouvelles technologies.</p>
+                                    <span class="about-contact"><i data-feather="phone-forwarded"></i>06 31 75 52 28</span>
+                                    <span class="about-contact"><i data-feather="mail"></i>contact@jobandyou.fr</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 offset-lg-1 col-sm-6">
+                            <div class="footer-widget footer-shortcut-link">
+                                <h4>Informations</h4>
+                                <div class="widget-inner">
+                                    <ul>
+                                        <li><a href="{{ path('forum') }}">Le Forum</a></li>
+                                        <li><a href="{{ path('page', {viewName: 'conditions-generales-de-ventes'}) }}">Conditions générales de ventes</a></li>
+                                        <li><a href="{{ path('page', {viewName: 'mentions-legales'}) }}">Mentions légales</a></li>
+                                        <li><a href="javascript:void(0)">Politique de confidentialité</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-sm-6">
+                            <div class="footer-widget footer-shortcut-link">
+                                <h4>Candidats</h4>
+                                <div class="widget-inner">
+                                    <ul>
+                                        <li><a href="{{ path('emplois') }}" title="Trouver un job">Trouver un job</a></li>
+                                        <li><a href="{{ path('entreprises') }}" title="Entreprises présentes au Forum Job&You">Liste des entreprises</a></li>
+                                        <li><a href="javascript:void(0)" title="Bientôt disponible ...">Participer à des ateliers</a></li>
+                                        <li><a href="javascript:void(0)" title="Bientôt disponible ...">Notre jeu concours</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        {% if is_granted('ROLE_CANDIDAT') == null %}
+                            <div class="col-lg-2 col-sm-6">
+                                <div class="footer-widget footer-shortcut-link">
+                                    <h4>Entreprises</h4>
+                                    <div class="widget-inner">
+                                        <ul>
+                                            <li><a href="{{ path('entreprise_inscription') }}">Réserver un stand</a></li>
+                                            <li><a href="{{ path('dashboard_entreprise_post_emplois') }}">Poster un job</a></li>
+                                            <li><a href="javascript:void(0)" title="Bientôt disponible ...">Trouver un profil</a></li>
+                                            <li><a href="javascript:void(0)" title="Bientôt disponible ...">Nos tables ouvertes</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom-area">
+                <div class="container">
+                    <div class="row">
+                        <div class="col">
+                            <div class="footer-bottom border-top">
+                                <div class="row">
+                                    <div class="col-12 col-md-6">
+                                        <p class="copyright-text">Copyright <a href="javascript:void(0)">Job & You</a> 2019, Tous droits réservés</p>
+                                    </div>
+                                    <div class="col-12 col-md-6">
+                                        <div class="back-to-top">
+                                            <a href="javascript:void(0)">Haut de page<i class="fas fa-angle-up"></i></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+    </div>
+    </footer>
+    <!-- Footer End -->
+{% endblock %}
+
+{% endblock body %}
+
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        $(function() {
+            if(location.hash == '#login') {
+                $('#login').modal('show');
+            }
+        });
+    </script>
+{% endblock %}

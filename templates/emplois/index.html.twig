@@ -1,0 +1,172 @@
+{% extends 'layout.html.twig' %}
+
+{% block content %}
+    {{ parent() }}
+    <!-- Breadcrumb -->
+    <div class="alice-bg padding-top-40 padding-bottom-40">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="breadcrumb-area">
+                        <h1>Job & You</h1>
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="{{ path('homepage') }}">Accueil</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">Trouver un job</li>
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Breadcrumb End -->
+
+    <!-- Job Listing -->
+    <div class="alice-bg section-padding-bottom">
+        <div class="container">
+            <div class="row no-gutters">
+                <div class="col">
+                    <div class="job-listing-container">
+                        <div class="row">
+                            <div class="col-lg-3">
+                                <form action="{{ path('emplois') }}" method="get">
+                                    <div class="job-filter-wrapper">
+                                        <div class="search-bar">
+                                            <div class="form-group row">
+                                                <label class="col-12 col-form-label">Rechercher</label>
+                                                <div class="col-12">
+                                                    <input type="text" class="form-control" name="s" placeholder="Job de vos rêves ..." value="{{ search }}">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row search-bar-container">
+                                            <div class="col-12">
+                                                <button class="button" type="submit">Filtrer</button>
+                                            </div>
+                                        </div>
+                                        <div class="selected-options">
+                                            <div class="selection-title">
+                                                <h4>Votre sélection</h4>
+                                                <a href="#">Effacer</a>
+                                            </div>
+                                            <ul class="filtered-options">
+                                            </ul>
+                                        </div>
+                                        <div data-id="job-type" class="job-filter job-type">
+                                            <h4 class="option-title">Type de contrat</h4>
+                                            <ul>
+                                                {% for tc in typeContrat %}
+                                                    <li class="full-time"><i data-feather="clock"></i><a href="#" data-attr="{{ tc.getLibelle() }}" data-id="{{ tc.getId() }}"
+                                                        {% if filters.typeContrat is defined and tc.getId() in filters.typeContrat %}
+                                                            data-selected="true"
+                                                        {% endif %}
+                                                        >{{ tc.getLibelle() }}</a></li>
+                                                {% endfor %}
+                                            </ul>
+                                        </div>
+                                        <div data-id="experience" class="job-filter experience">
+                                            <h4 class="option-title">Expérience</h4>
+                                            <ul>
+                                                {% for te in typeExperience %}
+                                                    <li><a href="#" data-attr="{{ te.getLibelle() }}" data-id="{{ te.getId() }}"
+                                                        {% if filters.typeExperience is defined and te.getId() in filters.typeExperience %}
+                                                            data-selected="true"
+                                                        {% endif %}
+                                                        >{{ te.getLibelle() }}</a></li>
+                                                {% endfor %}
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="col-lg-9">
+                                <div class="filtered-job-listing-wrapper">
+                                    <div class="job-view-controller-wrapper">
+                                        <div class="job-view-controller">
+                                            <div class="controller list active">
+                                                <i data-feather="menu"></i>
+                                            </div>
+                                            <div class="controller grid">
+                                                <i data-feather="grid"></i>
+                                            </div>
+                                            <div class="job-view-filter">
+                                                <select class="selectpicker">
+                                                    <option value="dateAdd" selected>Plus récent en premier</option>
+                                                    <option value="visited">Plus populaire en premier</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="showing-number">
+                                            <span>Trouver le job de vos rêves !</span>
+                                        </div>
+                                    </div>
+                                    <div class="job-filter-result">
+                                        {% if emplois %}
+                                            {% for emploi in emplois %}
+                                                <div class="job-list">
+                                                    <div class="thumb">
+                                                        <a href="#">
+                                                            <img src="{% if emploi.getEntreprise().getLogo() is not empty %}{{ asset(emploi.getEntreprise().getLogo()) }}{% else %}{{ asset('images/register-box/2.png') }}{% endif %}" class="img-fluid" alt="Logo de {{ emploi.getEntreprise().getDenomination()|upper }}">
+                                                        </a>
+                                                    </div>
+                                                    <div class="body">
+                                                        <div class="content">
+                                                            <h4><a href="{{ path('emploi', {idEmploi: emploi.getId()}) }}">{{ emploi.getIntitule() }}</a></h4>
+                                                            <div class="info">
+                                                                <span class="company"><a href="#"><i data-feather="briefcase"></i>{{ emploi.getEntreprise().getDenomination()|upper }}</a></span>
+                                                                <span class="office-location"><a href="#"><i data-feather="map-pin"></i>{{ emploi.getVille()|upper }}</a></span>
+                                                                <span class="job-type full-time"><a href="#"><i data-feather="clock"></i>{{ emploi.getTypeContrat().getLibelle() }}</a></span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="more">
+                                                            <div class="buttons">
+                                                                <a href="{{ path('emploi', {idEmploi: emploi.getId()}) }}" class="button">Ouvrir</a>
+                                                                {#<a href="#" class="favourite"><i data-feather="heart"></i></a>#}
+                                                            </div>
+                                                            <p class="deadline">Posté le : {{ emploi.getDateAdd()|date('d/m/Y') }}</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            {% endfor %}
+                                        {% else %}
+                                            {% if search or filters %}
+                                                <p>Nous sommes désolés, aucune offre d'emploi ne correspond à vos critères de recherche.</p>
+                                            {% else %}
+                                                <p>Aucune offre d'emploi n'a encore été déposée.</p>
+                                            {% endif %}
+                                        {% endif %}
+                                    </div>
+                                    {% include 'backoffice/pagination.html.twig' %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Job Listing End -->
+
+    <!-- Call to Action -->
+    <div class="call-to-action-bg padding-top-90 padding-bottom-90">
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <div class="call-to-action-2">
+                        <div class="call-to-action-content">
+                            <h2>Pour trouver l'emploi ou le candidat de vos rêves</h2>
+                        </div>
+                        <div class="call-to-action-button">
+                            <a href="javascript:void(0)" class="button" title="Bientôt disponible ...">Ajouter votre CV</a>
+                            <span>Ou</span>
+                            <a href="{{ path('dashboard_entreprise_post_emplois') }}" class="button">Poster un job</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Call to Action End -->
+{% endblock %}
+

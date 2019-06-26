@@ -1,0 +1,120 @@
+{% extends 'backoffice/layout.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('assets/dashboard/css/bootstrap-tagsinput.css') }}">
+{% endblock %}
+
+{% block dashboardContent %}
+    <div class="download-resume dashboard-section upload-resume">
+        <form action="{{ path('dashboard_candidat_upload_resume') }}" enctype="multipart/form-data" method="post">
+            <div class="file-upload">
+                <input type="file" name="resume" accept="application/pdf" class="file-input" style="cursor: pointer">
+                <span>
+                    {% if app.user.getCandidat().getCv() %}Mettre à jour mon CV {% else %}Télécharger mon CV {% endif %}<i data-feather="upload"></i>
+                </span>
+            </div>
+        </form>
+
+        {% if candidat.getCv() %}
+            <a href="{{ path('downloadResume', {file: candidat.getCv()|url_encode, userIdPath: candidat.getUser().getId()}) }}" target="_blank">Voir mon CV <i data-feather="download"></i></a>
+        {% endif %}
+    </div>
+    <form action="{{ path('dashboard_candidat_post_competences') }}" method="POST" enctype="multipart/form-data" class="dashboard-form">
+        <div class="dashboard-section basic-info-input padding-top-40">
+            <div class="col-12">
+                <h4><i data-feather="user-check"></i>Mon CV</h4>
+                <p>Ces informations permettront aux recruteurs de trouver votre profil dans nos bases de données.<br />Indiquez de manière claire, vos formations, vos expériences professionnelles et optionnellement vos compétences.<br /><b>Recopiez simplement les informations présentes sur votre CV</b></p>
+                <div class="form-group row" style="margin-top: 70px">
+                    <label class="col-sm-3 col-form-label">Formations</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" name="diplome" placeholder="Exemple : BAC Scientifique" value="{{ candidat.getEducation() }}">
+                    </div>
+                </div>
+                <div class="alert alert-primary" role="alert">
+                    4 formations sont autorisés. Pas de virgule possible. Appuyez sur "<b>Entrer</b>" pour valider une formation<br/>
+                    50 caractères maximum par formation.
+                </div>
+            </div>
+
+            <div class="col-12">
+                <div class="form-group row" style="margin-top: 70px">
+                    <label class="col-sm-3 col-form-label">Expériences professionnelles</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" name="experience" placeholder="Exemple : Agent de sécurité" value="{{ candidat.getExperience() }}">
+                    </div>
+                </div>
+                <div class="alert alert-primary" role="alert">
+                    4 expériences sont autorisés. Pas de virgule possible. Appuyez sur "<b>Entrer</b>" pour valider une expérience<br/>
+                    50 caractères maximum par expérience professionnelle.
+                </div>
+            </div>
+
+            <div class="col-12">
+                <div class="form-group row" style="margin-top: 70px">
+                    <label class="col-sm-3 col-form-label">Compétences</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" name="competence" placeholder="Exemple : Maîtrise des bases du secourisme" value="{{ candidat.getCompetence() }}">
+                    </div>
+                </div>
+                <div class="alert alert-primary" role="alert">
+                    4 compétences sont autorisés. Pas de virgule possible. Appuyez sur "<b>Entrer</b>" pour valider une compétence<br/>
+                    50 caractères maximum par compétence.
+                </div>
+            </div>
+
+            <div class="col-12">
+                <div class="form-group row" style="margin-top: 70px">
+                    <div class="col-sm-12" style="text-align: center">
+                        <button class="button" type="submit">Modifer mes informations</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('assets/dashboard/js/bootstrap-tagsinput.js') }}"></script>
+
+    <script>
+        $(function(){
+            $('input[name="diplome"]').tagsinput({
+                maxTags: 4,
+                maxChars: 51,
+                trimValue: true,
+                cancelConfirmKeysOnEmpty: true
+            });
+
+            $('input[name="experience"]').tagsinput({
+                maxTags: 4,
+                maxChars: 51,
+                trimValue: true,
+                cancelConfirmKeysOnEmpty: true
+            });
+
+            $('input[name="competence"]').tagsinput({
+                maxTags: 4,
+                maxChars: 51,
+                trimValue: true,
+                cancelConfirmKeysOnEmpty: true
+            });
+
+            $('input[name="site_web"]').tagsinput({
+                maxTags: 4,
+                maxChars: 51,
+                trimValue: true,
+                cancelConfirmKeysOnEmpty: true
+            });
+
+            $('.bootstrap-tagsinput input').keydown(function(event) {
+                if(event.which == 13) {
+                    $('input[name="'+$(this).parent().next().attr('name')+'"]').tagsinput('add', $(this).val());
+                    $(this).val('');
+                    event.preventDefault();
+                }
+            })
+        });
+    </script>
+{% endblock %}

@@ -1,0 +1,205 @@
+{% extends 'backoffice/layout.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('assets/dashboard/css/bootstrap-tagsinput.css') }}">
+{% endblock %}
+
+{% block dashboardContent %}
+    <form action="{{ path('dashboard_entreprise_logo') }}" enctype="multipart/form-data" method="post">
+        <div class="dashboard-section upload-profile-photo">
+            <div class="update-photo">
+                <img class="image" src="{% if app.user.getEntreprise().getLogo() is not empty %}{{ asset(app.user.getEntreprise().getLogo()) }}{% else %}{{ asset('images/register-box/2.png') }}{% endif %}" alt="Logo de votre entreprise" title="Logo de votre entreprise">
+            </div>
+            <div class="file-upload">
+                <input type="file" name="logoEntreprise" accept="image/*" class="file-input">Modifier mon logo
+            </div>
+        </div>
+    </form>
+    <br><br>
+    <form action="{{ path('dashboard_entreprise_profil') }}" method="POST" enctype="multipart/form-data" class="dashboard-form">
+        <div class="dashboard-section basic-info-input">
+            <h4><i data-feather="user-check"></i>Informations sur votre entreprise</h4>
+            <div class="row">
+                <div class="col-xs-12 col-md-6">
+                    <div class="form-group row">
+                        <label class="col-sm-4 col-form-label required">Dénomination</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" required name="denomination" placeholder="Dénomination" value="{{ entreprise.getDenomination() }}">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-md-6">
+                    <div class="form-group row">
+                        <label class="col-sm-5 col-form-label">Nom commercial</label>
+                        <div class="col-sm-7">
+                            <input type="text" class="form-control" name="nomMarque" placeholder="Nom de marque, commercial ..." value="{{ entreprise.getNomMarque() }}">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-md-6">
+                    <div class="form-group row">
+                        <label class="col-sm-4 col-form-label required">Adresse e-mail</label>
+                        <div class="col-sm-8">
+                            <input type="email" class="form-control" required name="email" placeholder="Adresse e-mail" value="{{ app.user.getEmail() }}">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-md-6">
+                    <div class="form-group row">
+                        <label class="col-sm-5 col-form-label required">N° Téléphone</label>
+                        <div class="col-sm-7">
+                            <input type="text" class="form-control" required name="telephone" placeholder="N° Téléphone" value="{{ entreprise.getTelephone() }}">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="alert alert-primary" role="alert">
+                        <b>Attention : </b>Votre adresse e-mail représente votre identifiant lors de la connexion à notre site. Si vous modifiez cette dernière, veillez à indiquer cette nouvelle adresse lors de vos futures connexions.<br>
+                        <b>Si vous modifiez votre adresse e-mail, vous serez déconnecté par mesure de sécurité après soumission du formulaire.</b>
+                    </div>
+                </div>
+                <br/><br/><br/><br/>
+                <div class="col-xs-12 col-md-4">
+                    <div class="form-group row">
+                        <label class="col-sm-4 col-form-label required">Adresse</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" required name="adresse" placeholder="Adresse" value="{{ entreprise.getAdresse() }}">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-md-4">
+                    <div class="form-group row">
+                        <label class="col-sm-7 col-form-label required">Code Postal</label>
+                        <div class="col-sm-5">
+                            <input type="text" class="form-control" required name="codePostal" placeholder="Code Postal" value="{{ entreprise.getCodePostal() }}">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-md-4">
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label required">Ville</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" required name="ville" placeholder="Ville" value="{{ entreprise.getVille() }}">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-md-4">
+                    <div class="form-group row">
+                        <label class="col-sm-4 col-form-label required">SIRET</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" required name="siret" placeholder="SIRET" value="{{ entreprise.getSiret() }}">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-md-4">
+                    <div class="form-group row">
+                        <label class="col-sm-7 col-form-label required">Code NAF/APE</label>
+                        <div class="col-sm-5">
+                            <input type="text" class="form-control" required name="nafApe" placeholder="NAF/APE" value="{{ entreprise.getNafApe() }}">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-md-4">
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label">Site Web</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" name="siteWeb" placeholder="Site internet" value="{{ entreprise.getSiteWeb() }}">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label">Secteurs d'activités</label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control" name="secteursActivites" value="{% if entreprise.getSecteursActivites() is not empty %}{{ entreprise.getSecteursActivites() }}{% else %}Exemple: BTP,Ex: Textile,Ex: Agroalimentaire{% endif %}">
+                </div>
+            </div>
+            <div class="alert alert-primary" role="alert">
+                4 Secteurs d'activités différents sont autorisés. Appuyez sur "<b>Entrer</b>" pour valider un secteur<br/>
+                Un secteur d'activité ne doit pas dépasser 25 caractères.
+            </div>
+            <br/><br/><br/><br/>
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label">Décrivez votre entreprise aux candidats</label>
+                <div class="col-sm-9">
+                    <textarea class="form-control" name="description" placeholder="C'est à vous ;">{{ entreprise.getDescription() }}</textarea>
+                </div>
+            </div>
+        </div>
+        <div class="dashboard-section social-inputs">
+            <h4><i data-feather="cast"></i>Réseaux sociaux</h4>
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label">Votre présence sur les réseaux sociaux</label>
+                <div class="col-sm-9">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text"><i class="fab fa-facebook-f"></i></div>
+                        </div>
+                        <input type="text" class="form-control" name="reseauxSociaux[facebook]" value="{% if entreprise.getReseauxSociaux.facebook is defined %}{{ entreprise.getReseauxSociaux.facebook }}{% endif %}" placeholder="facebook.com/votre-societe">
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="offset-sm-3 col-sm-9">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text"><i class="fab fa-twitter"></i></div>
+                        </div>
+                        <input type="text" class="form-control" name="reseauxSociaux[twitter]" value="{% if entreprise.getReseauxSociaux.twitter is defined %}{{ entreprise.getReseauxSociaux.twitter }}{% endif %}" placeholder="twitter.com/votre-societe">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="dashboard-section basic-info-input">
+            <h4><i data-feather="lock"></i>Modifer mon mot de passe</h4>
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label">Votre mot de passe actuel</label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control" name="password" placeholder="Mot de passe actuel">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label">Votre nouveau mot de passe</label>
+                <div class="col-sm-9">
+                    <input type="password" class="form-control" name="newPassword" placeholder="Nouveau mot de passe">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label">Confirmez votre nouveau mot de passe</label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control" name="newPasswordConfirm" placeholder="Confirmez le mot de passe">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label"></label>
+                <div class="col-sm-9">
+                    <button class="button" type="submit">Modifer & Publier mes informations</button>
+                </div>
+            </div>
+        </div>
+    </form>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('assets/dashboard/js/bootstrap-tagsinput.js') }}"></script>
+    <script>
+        $(function(){
+            $('input[name="secteursActivites"]').tagsinput({
+                maxTags: 4,
+                maxChars: 25,
+                trimValue: true,
+                cancelConfirmKeysOnEmpty: true
+            });
+
+            $('.bootstrap-tagsinput input').keydown(function(event) {
+                if(event.which == 13) {
+                    $('input[name="secteursActivites"]').tagsinput('add', $(this).val());
+                    $(this).val('');
+                    event.preventDefault();
+                }
+            })
+        });
+    </script>
+{% endblock %}

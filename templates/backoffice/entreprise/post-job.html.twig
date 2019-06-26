@@ -1,0 +1,161 @@
+{% extends 'backoffice/layout.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('assets/dashboard/css/bootstrap-tagsinput.css') }}">
+{% endblock %}
+
+{% block dashboardContent %}
+    <form action="{{ path('dashboard_entreprise_post_emplois') }}" method="POST" class="dashboard-form job-post-form">
+        {% if emploi is defined and emploi.id is defined %}
+            <input type="hidden" name="idEmploi" value="{{ emploi.id }}">
+        {% endif %}
+        <div class="dashboard-section basic-info-input">
+            <h4><i data-feather="user-check"></i>Poster un job</h4>
+            <div class="row">
+                <div class="col-12">
+                    <div class="form-group row">
+                        <label class="col-md-3 col-form-label required">Intitulé du poste</label>
+                        <div class="col-md-9">
+                            <input type="text" class="form-control" required maxlength="255" name="intitule" placeholder="Intitulé du poste (bref mais spécifique)" value="{% if emploi.intitule is defined %}{{ emploi.intitule }}{% endif %}">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="form-group row">
+                        <label class="col-md-3 col-form-label required">Lieu de travail <i>(ville)</i></label>
+                        <div class="col-md-9">
+                            <input type="text" class="form-control" name="ville" maxlength="255" required placeholder='Spécifier simplement : "code postal, ville"' value="{% if emploi.ville is defined %}{{ emploi.ville }}{% endif %}">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="form-group row">
+                        <label class="col-md-3 col-form-label required">Type de contrat</label>
+                        <div class="col-md-9">
+                            <select name="typeContrat" id="typeContrat" required class="form-control">
+                                <option value="">Choisissez un type de contrat</option>
+                                {% for tc in typeContrat %}
+                                    <option value="{{ tc.getId() }}" {% if emploi.typeContrat is defined and emploi.typeContrat == tc %}selected="selected"{% endif %}>{{ tc.getLibelle() }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="form-group row">
+                        <label class="col-md-3 col-form-label required">Expérience souhaité</label>
+                        <div class="col-md-9">
+                            <select name="typeExperience" id="typeExperience" required class="form-control">
+                                <option value="">Choisissez l'expérience souhaité</option>
+                                {% for te in typeExperience %}
+                                    <option value="{{ te.getId() }}" {% if emploi.typeExperience is defined and emploi.typeExperience == te %}selected="selected"{% endif %}>{{ te.getLibelle() }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="form-group row">
+                        <label class="col-md-3 col-form-label">Salaire Brut mensuel</label>
+                        <div class="col-md-9">
+                            <input type="number" class="form-control" name="salaireBrut" step="any" placeholder='Exemple : 1 521.25' value="{% if emploi.salaireBrut is defined %}{{ emploi.salaireBrut }}{% endif %}">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label">Compétences</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" name="responsabilite" value="{% if emploi.responsabilite is defined %}{{ emploi.responsabilite }}{% else %}Exemple : Bonnes compétences en communication verbale et écrite.,Exemple : Avoir une bonne connaissance des activités commerciales.,Exemple : Compétences sur MS Word / Excel.,Exemple : Capacité d'analyse des besoins client.{% endif %}">
+                        </div>
+                    </div>
+                    <div class="alert alert-primary" role="alert">
+                        6 compétences sont autorisés. Pas de virgule possible. Appuyez sur "<b>Entrer</b>" pour valider une compétence<br/>
+                        100 caractères maximum par compétence.
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label">Formations souhaités</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" name="etude" value="{% if emploi.etude is defined %}{{ emploi.etude }}{% else %}Exemple : BTS Technico-commercial.,Exemple : BTS Négociation et relation client.,Exemple : BAC PRO Vente prospection - négociation.{% endif %}">
+                        </div>
+                    </div>
+                    <div class="alert alert-primary" role="alert">
+                        4 formations sont autorisés. Pas de virgule possible. Appuyez sur "<b>Entrer</b>" pour valider une formation<br/>
+                        100 caractères maximum par formation.
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label">Avantages</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" name="avantage" value="{% if emploi.avantage is defined %}{{ emploi.avantage }}{% else %}Exemple : Véhicule de fonction.,Exemple : Ticket restaurant.,Exemple : Prime annuelle basée sur performance.{% endif %}">
+                        </div>
+                    </div>
+                    <div class="alert alert-primary" role="alert">
+                        4 avantages sont autorisés. Pas de virgule possible. Appuyez sur "<b>Entrer</b>" pour valider un avantage<br/>
+                        50 caractères maximum par avantage.
+                    </div>
+                </div>
+                <div class="col-12" style="margin-top: 40px;">
+                    <div class="form-group row">
+                        <label class="col-md-12 col-form-label required">Décrivez votre entreprise, le poste, le profil recherché la formation et les compétences requises.</label>
+                        <div class="col-md-12">
+                            <textarea name="description" required class="form-control" id="" cols="30" rows="10" minlength="100">{% if emploi.description is defined %}{{ emploi.description }}{% endif %}</textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-4 text-center">
+                    <button class="button" type="submit" name="draft">Enregistrer en brouillon</button>
+                </div>
+                <div class="col-4 text-center">
+                    <button class="button" type="submit" name="open" style="background: #d7842d;">Enreg. en brouillon & Ouvrir</button>
+                </div>
+                <div class="col-4 text-center">
+                    <button class="button" type="submit" name="publish" style="background: #63a31d;">Publier l'offre d'emploi</button>
+                </div>
+            </div>
+        </div>
+    </form>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('assets/dashboard/js/bootstrap-tagsinput.js') }}"></script>
+    <script>
+        $(function(){
+            $('input[name="responsabilite"]').tagsinput({
+                maxTags: 6,
+                maxChars: 100,
+                trimValue: true,
+                cancelConfirmKeysOnEmpty: true
+            });
+
+            $('input[name="etude"]').tagsinput({
+                maxTags: 4,
+                maxChars: 100,
+                trimValue: true,
+                cancelConfirmKeysOnEmpty: true
+            });
+
+            $('input[name="avantage"]').tagsinput({
+                maxTags: 4,
+                maxChars: 50,
+                trimValue: true,
+                cancelConfirmKeysOnEmpty: true
+            });
+
+            $('.bootstrap-tagsinput input').keydown(function(event) {
+                if(event.which == 13) {
+                    $('input[name="'+$(this).closest('.bootstrap-tagsinput').next().attr('name')+'"]').tagsinput('add', $(this).val());
+                    $(this).val('');
+                    event.preventDefault();
+                }
+            })
+        });
+    </script>
+{% endblock %}

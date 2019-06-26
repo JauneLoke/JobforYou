@@ -1,0 +1,51 @@
+security:
+    encoders:
+        App\Entity\User:
+            algorithm: argon2i
+
+    # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
+    providers:
+        # used to reload user from session & other features (e.g. switch_user)
+        app_user_provider:
+            entity:
+                class: App\Entity\User
+                property: email
+    firewalls:
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+        main:
+            anonymous: true
+
+            form_login:
+                check_path: login_check
+                login_path: login_check
+                csrf_token_generator: security.csrf.token_manager
+                use_referer: true
+
+            remember_me:
+                secret: '%kernel.secret%'
+                lifetime: 604800
+                path: /
+
+            logout:
+                path: logout
+                target: /
+
+            # activate different ways to authenticate
+
+            # http_basic: true
+            # https://symfony.com/doc/current/security.html#a-configuring-how-your-users-will-authenticate
+
+            # form_login: true
+            # https://symfony.com/doc/current/security/form_login_setup.html
+
+    # Easy way to control access for large sections of your site
+    # Note: Only the *first* access control that matches will be used
+    access_control:
+         - { path: ^/dashboard/entreprise, roles: ROLE_ENTREPRISE }
+         - { path: ^/dashboard/candidat, roles: ROLE_CANDIDAT }
+         - { path: ^/dashboard/admin/, roles: ROLE_ADMIN }
+         - { path: ^/dashboard, roles: ROLE_USER }
+         - { path: ^/candidats, roles: [ROLE_ADMIN, ROLE_ENTREPRISE] }
+        # - { path: ^/profile, roles: ROLE_USER }

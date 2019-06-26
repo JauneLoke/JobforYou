@@ -1,0 +1,174 @@
+{% extends 'layout.html.twig' %}
+
+{% block content %}
+    {{ parent() }}
+    <!-- Breadcrumb -->
+    <div class="alice-bg padding-top-40 padding-bottom-40">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="breadcrumb-area">
+                        <h1>Job & You</h1>
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="{{ path('homepage') }}">Accueil</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">Conditions générales de ventes</li>
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Breadcrumb End -->
+
+    <div class="alice-bg section-padding-bottom">
+        <div class="container no-gliters">
+            <div class="row no-gliters">
+                <div class="col">
+                    <div class="terms-container">
+                        <div class="terms-content-wrapper">
+                            <div class="policy-tab">
+                                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                    {#<li class="nav-item">#}
+                                        {#<a class="nav-link active" id="privacy-tab" data-toggle="tab" href="#privacy" role="tab" aria-controls="privacy" aria-selected="true">Privacy Policy</a>#}
+                                    {#</li>#}
+                                    <li class="nav-item">
+                                        <a class="nav-link active" id="terms-tab" data-toggle="tab" href="#cgv" role="tab" aria-controls="cgv" aria-selected="true">Conditions générales de ventes</a>
+                                    </li>
+                                    {#<li class="nav-item">#}
+                                        {#<a class="nav-link" id="regal-tab" data-toggle="tab" href="#regal" role="tab" aria-controls="regal" aria-selected="false">Regal</a>#}
+                                    {#</li>#}
+                                </ul>
+                                <div class="tab-content" id="myTabContent">
+                                    {#<div class="tab-pane fade show active" id="privacy" role="tabpanel" aria-labelledby="privacy-tab">#}
+                                        {#<h4 id="welcome">Welcome To Oficiona</h4>#}
+                                        {#<p>Expound the actual teachings of the great explorer of the truth, the master-builder of human happiness. No one rejects, dislikes, or avoids pleasure itself, because it is pleasure, but because those who do not know how to pursue pleasure rationally encounter consequences that are extremely painful. Nor again is there anyone.</p>#}
+                                        {#<p>Who loves or pursues or desires to obtain pain of itself, because it is pain, but because occasionally circumstances occur in which toil and pain can procure him some great pleasure.</p>#}
+                                        {#<h5 id="termss">Our Terms</h5>#}
+                                        {#<p>Nor again is there anyone who loves or pursues or desires to obtain pain of itself, because it is pain, but because occasionally circumstances occur in which toil and pain can procure him some great pleasure. To take a trivial example, which of us ever undertakes laborious  some great physical exercise, except to.</p>#}
+                                        {#<ul>#}
+                                            {#<li>But because those who do not know how to pursue pleasure</li>#}
+                                            {#<li>Nor again is there anyone who loves or pursues</li>#}
+                                            {#<li>Except to obtain some advantage from it?</li>#}
+                                            {#<li>who avoids a pain that produces no resultant pleasure.</li>#}
+                                        {#</ul>#}
+                                        {#<h5 id="condition">Conditions</h5>#}
+                                        {#<p>it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy Nor again is there anyone who loves or pursues or desires to obtain pain of itself, because it is pain.</p>#}
+                                        {#<p>but because occasionally circumstances occur in which toil and pain can procure him some great pleasure. To take a trivial example, which of us ever undertakes laborious  some great physical exercise, except to.</p>#}
+                                        {#<ul>#}
+                                            {#<li>Nor again is there anyone who loves or pursues</li>#}
+                                            {#<li>Except to obtain some advantage from it?</li>#}
+                                            {#<li> who avoids a pain that produces no resultant pleasure.</li>#}
+                                        {#</ul>#}
+                                        {#<h5 id="privacy-2">Your Privacy</h5>#}
+                                        {#<p>All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum which looks reasonable. The generated Lorem Ipsum is therefore always free from repetition, injected humour, or non-characteristic words etc. De Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum.</p>#}
+                                        {#<h5 id="information">Informations We Collect</h5>#}
+                                        {#<p>Combined with a handful of model sentence structures, to generate Lorem Ipsum which looks reasonable. The generated Lorem Ipsum is therefore always free from repetition, injected humour, or non-characteristic words etc. De Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero, written in 45 BC.</p>#}
+                                        {#<ul class="substyle">#}
+                                            {#<li><span>Cookies:</span> Our Website uses "Cookies" to identify the areas of our Website that you have visited. A Cookie is a small piece of data stored on your computer or mobile device by your web browser. We use Cookies to personalize the Content that you see on our Website. Most web browsers can be set to disable the use of Cookies. However, if you disable Cookies, you may not be able to access functionality on our Website correctly or at all. We never place Personally Identifiable Information in Cookies.</li>#}
+                                            {#<li><span>Geographical Information:</span> We will not share your current location with other users or partners. If you do not want us to use your location for the purposes set forth above, you should turn off the location services for the mobile application located in your account settings or in your mobile phone settings and/or within the mobile application.</li>#}
+                                            {#<li><span>Log Data:</span> Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose </li>#}
+                                        {#</ul>#}
+                                        {#<h5 id="security">Security</h5>#}
+                                        {#<p>Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage</p>#}
+                                        {#<p>And going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero.</p>#}
+                                        {#<h5 id="update">Privacy Policy Update</h5>#}
+                                        {#<p>If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with</p>#}
+                                        {#<p>to generate Lorem Ipsum which looks reasonable. The generated Lorem Ipsum is therefore always free from repetition, injected humour, or non-characteristic words etc.</p>#}
+                                    {#</div>#}
+                                    <div class="tab-pane fade show active" id="cgv" role="tabpanel" aria-labelledby="cgv-tab">
+                                        <h4 id="cl1">Clause N° 1 : Objet</h4>
+                                        <p>Les conditions générales de vente décrites ci-après détaillent les droits et obligations de la société Frédéric JOOS - IDEE Conseils SIRET : 80025910300011 41, enclos Claude Coste 34130 MAUGUIO et de son client dans le cadre de la mise à disposition de stand décrit dans le bon de commande dûment validé et signé par le client.</p>
+                                        <p>Toute prestation accomplie par la société Frédéric JOOS - IDEE Conseils implique donc l'adhésion sans réserve de l'acheteur aux présentes conditions générales de vente.</p>
+                                        <h5 id="cl2">Clause N° 2 : Prix</h5>
+                                        <p>Les prix des stands mis  à disposition vendues sont ceux en vigueur au jour de la prise de commande. Ils sont libellés en euros et calculés hors taxes. Par voie de conséquence, ils seront majorés du taux de TVA applicables au jours de la commande.</p>
+                                        <p>La société Frédéric JOOS - IDEE Conseils s'accorde le droit de modifier ses tarifs à tout moment.</p>
+                                        <p>Toutefois, elle s'engage à facturer les marchandises et services commandés aux prix indiqués lors de l'enregistrement de la commande.</p>
+                                        <h5 id="cl3">Clause N° 3 : Rabais et ristournes</h5>
+                                        <p>Les tarifs proposés comprennent les rabais et ristournes que la société Frédéric JOOS - IDEE Conseils serait amenée à octroyer compte tenu de ses résultats ou de la prise en charge par l'acheteur de certaines prestations.</p>
+                                        <h5 id="cl4">Clause N° 4 : Escompte</h5>
+                                        <p>Aucun escompte ne sera consenti en cas de paiement anticipé.</p>
+                                        <h5 id="cl5">Clause N° 5 : Modalités de paiement</h5>
+                                        <p>Le règlement des commandes s'effectue par chèque, par virement ou en espèces.</p>
+                                        <p>L’acheteur règlera la totalité de la facture à la signature du bon de commande.</p>
+                                        <h5 id="cl6">Clause N° 6 : Retard et défaut de paiement</h5>
+                                        <p>En cas de retard et défaut de paiement total ou partiel des marchandises et services livrés au jour de la réception, l'acheteur doit verser à la société Frédéric JOOS - IDEE Conseils une pénalité de retard égale à trois fois le taux de l’intérêt légal.</p>
+                                        <p>Le taux de l'intérêt légal retenu est celui en vigueur au jour de la livraison des marchandises. A compter du 1er janvier 2019, le taux d'intérêt légal sera révisé tous les 6 mois (Ordonnance n°2014-947 du 20 août 2014). Cette pénalité est calculée sur le montant TTC de la somme restant due, et court à compter de la date d’échéance du prix sans qu’aucune mise en demeure préalable ne soit nécessaire.</p>
+                                        <p>En sus des indemnités de retard, toute somme non payée à sa date d’exigibilité produira de plein droit le paiement d’une indemnité forfaitaire de 50.00€ Hors Taxes due au titre des frais de recouvrement (Articles 441-6, I alinéa 12 et D. 441-5 du code de commerce).</p>
+                                        <h5 id="cl7">Clause N° 7 : Clause résolutoire</h5>
+                                        <p>Si dans les quinze jours qui suivent la mise en œuvre de la clause " Retard de paiement ", l'acheteur ne s'est pas acquitté des sommes restant dues, la vente sera résolue de plein droit et pourra ouvrir droit à l'allocation de dommages et intérêts au profit de la société Frédéric JOSS - IDEE Conseils.</p>
+                                        <h5 id="cl8">Clause N° 8 : Clause de réserve de propriété</h5>
+                                        <p>La société Frédéric JOOS - IDEE Conseils conserve la propriété des biens vendus jusqu'au paiement intégral du prix, en principal et en accessoire. A ce titre, si l’acheteur fait l'objet d'un redressement ou d’une liquidation judiciaire, la société Frédéric JOSS - IDEE Conseils se réserve le droit de revendiquer, dans le cadre de la procédure collective les prestations vendues et restées impayées.</p>
+                                        <h5 id="cl9">Clause N° 9 : Livraison</h5>
+                                        <p>La livraison est effectuée par la mise à disposition des stands et des prestations annexes définis dans le bon de commande signé et validé par le client.</p>
+                                        <p>Par voie de conséquence, tout retard raisonnable dans la livraison des marchandises et des services commandés ne pourra pas donner lieu au profit de l'acheteur à l'allocation de dommages et intérêts et à l'annulation de la commande.</p>
+                                        <p>Toute réserve devra être, en outre, être confirmées par écrit dans les cinq jours suivant la livraison, par courrier recommandé AR.</p>
+                                        <h5 id="cl10">Clause N° 10 : Force majeure</h5>
+                                        <p>La responsabilité de la société Frédéric JOOS - IDEE Conseils ne pourra pas être mise en œuvre si la non-exécution ou le retard dans l'exécution de l'une de ses obligations décrites dans les présentes conditions générales de vente découle d'un cas de force majeure. À ce titre, la force s’entend de tout évènement extérieur, imprévisible et irrésistible au sens de l’article 1148 du Code civil.</p>
+                                        <h5 id="cl11">Clause N° 11 : Tribunal compétent</h5>
+                                        <p>Tout litige relatif à l'interprétation et à l'exécution des présentes conditions générales de vente est soumis au droit français </p>
+                                        <p>À défaut de résolution amiable, le litige sera porté devant le Tribunal de commerce de MONTPELLIER sera seul compétent.</p>
+                                    </div>
+                                    {#<div class="tab-pane fade" id="regal" role="tabpanel" aria-labelledby="regal-tab">#}
+                                        {#<h4>Welcome To Oficiona</h4>#}
+                                        {#<p>Expound the actual teachings of the great explorer of the truth, the master-builder of human happiness. No one rejects, dislikes, or avoids pleasure itself, because it is pleasure, but because those who do not know how to pursue pleasure rationally encounter consequences that are extremely painful. Nor again is there anyone.</p>#}
+                                        {#<p>Who loves or pursues or desires to obtain pain of itself, because it is pain, but because occasionally circumstances occur in which toil and pain can procure him some great pleasure.</p>#}
+                                        {#<h5>Our Terms</h5>#}
+                                        {#<p>Nor again is there anyone who loves or pursues or desires to obtain pain of itself, because it is pain, but because occasionally circumstances occur in which toil and pain can procure him some great pleasure. To take a trivial example, which of us ever undertakes laborious  some great physical exercise, except to.</p>#}
+                                        {#<ul>#}
+                                            {#<li>But because those who do not know how to pursue pleasure</li>#}
+                                            {#<li>Nor again is there anyone who loves or pursues</li>#}
+                                            {#<li>Except to obtain some advantage from it?</li>#}
+                                            {#<li>who avoids a pain that produces no resultant pleasure.</li>#}
+                                        {#</ul>#}
+                                        {#<h5>Conditions</h5>#}
+                                        {#<p>it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy Nor again is there anyone who loves or pursues or desires to obtain pain of itself, because it is pain.</p>#}
+                                        {#<p>but because occasionally circumstances occur in which toil and pain can procure him some great pleasure. To take a trivial example, which of us ever undertakes laborious  some great physical exercise, except to.</p>#}
+                                        {#<ul>#}
+                                            {#<li>Nor again is there anyone who loves or pursues</li>#}
+                                            {#<li>Except to obtain some advantage from it?</li>#}
+                                            {#<li> who avoids a pain that produces no resultant pleasure.</li>#}
+                                        {#</ul>#}
+                                        {#<h5>Your Privacy</h5>#}
+                                        {#<p>All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum which looks reasonable. The generated Lorem Ipsum is therefore always free from repetition, injected humour, or non-characteristic words etc. De Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum.</p>#}
+                                        {#<h5>Informations We Collect</h5>#}
+                                        {#<p>Combined with a handful of model sentence structures, to generate Lorem Ipsum which looks reasonable. The generated Lorem Ipsum is therefore always free from repetition, injected humour, or non-characteristic words etc. De Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero, written in 45 BC.</p>#}
+                                        {#<ul class="substyle">#}
+                                            {#<li><span>Cookies:</span> Our Website uses "Cookies" to identify the areas of our Website that you have visited. A Cookie is a small piece of data stored on your computer or mobile device by your web browser. We use Cookies to personalize the Content that you see on our Website. Most web browsers can be set to disable the use of Cookies. However, if you disable Cookies, you may not be able to access functionality on our Website correctly or at all. We never place Personally Identifiable Information in Cookies.</li>#}
+                                            {#<li><span>Geographical Information:</span> We will not share your current location with other users or partners. If you do not want us to use your location for the purposes set forth above, you should turn off the location services for the mobile application located in your account settings or in your mobile phone settings and/or within the mobile application.</li>#}
+                                            {#<li><span>Log Data:</span> Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose </li>#}
+                                        {#</ul>#}
+                                        {#<h5>Security</h5>#}
+                                        {#<p>Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage</p>#}
+                                        {#<p>And going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero.</p>#}
+                                        {#<h5>Privacy Policy Update</h5>#}
+                                        {#<p>If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with</p>#}
+                                        {#<p>to generate Lorem Ipsum which looks reasonable. The generated Lorem Ipsum is therefore always free from repetition, injected humour, or non-characteristic words etc.</p>#}
+                                    {#</div>#}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="terms-sidebar">
+                            <h5><i data-feather="arrow-down-circle"></i>Navigation</h5>
+                            <ul class="sidebar-menu">
+                                <li><a href="#cl1">Objet</a></li>
+                                <li><a href="#cl2">Prix</a></li>
+                                <li><a href="#cl3">Rabais et ristournes</a></li>
+                                <li><a href="#cl4">Escompte</a></li>
+                                <li><a href="#cl5">Modalités de paiement</a></li>
+                                <li><a href="#cl6">Retard et défaut de paiement</a></li>
+                                <li><a href="#cl7">Clause résolutoire</a></li>
+                                <li><a href="#cl8">Clause de réserve de propriété</a></li>
+                                <li><a href="#cl9">Livraison</a></li>
+                                <li><a href="#cl10">Force majeure</a></li>
+                                <li><a href="#cl11">Tribunal compétent</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+

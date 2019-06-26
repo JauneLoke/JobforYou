@@ -1,0 +1,50 @@
+{% extends 'backoffice/layout.html.twig' %}
+
+{% block dashboardContent %}
+    <div class="manage-job-container">
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Intitulé du job</th>
+                <th style="text-align: center">Nombre de vues</th>
+                <th style="text-align: center">Date de création</th>
+                <th style="text-align: center">Status</th>
+                <th style="text-align: center" class="action">Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for emploi in emplois %}
+                
+                <tr class="job-items">
+                    <td class="title">
+                        <h5><a href="{{ path('emploi', {idEmploi: emploi.getId()}) }}" target="_blank">{{ emploi.getIntitule() }}</i></a></h5>
+                        <div class="info">
+                            <span class="job-type full-time"><i data-feather="clock"></i>{{ emploi.getTypeContrat().getLibelle() }}</span>
+                        </div>
+                    </td>
+                    <td class="application" align="center"><span style="font-size: 20px;">{{ emploi.getCountViewed() }}</span></td>
+                    <td class="deadline" align="center">{{ emploi.getDateAdd()|date('d/m/Y H:i') }}</td>
+                    <td  align="center" class="status {% if emploi.getActive() == 1 %}active{% else %}pending{% endif %}">{% if emploi.getActive() == 1 %}En ligne{% else %}Brouillon{% endif %}</td>
+                    <td class="action">
+                        <a href="{{ path('emploi', {idEmploi: emploi.getId()}) }}" target="_blank" class="preview" title="Ouvrir"><i data-feather="eye"></i></a><br/>
+                        <a href="{{ path('dashboard_entreprise_post_emplois', {idEmploi: emploi.getId()}) }}" class="edit" title="Modifier"><i data-feather="edit-2"></i></a><br/>
+                        <a href="{{ path('dashboard_entreprise_delete_emplois', {idEmploi: emploi.getId()}) }}" class="remove" onclick="return(confirm('Voulez-vous vraiment supprimer cette offre d\'emploi ? Cette action est définitive.'));" title="Supprimer"><i data-feather="trash-2"></i></a><br/>
+                        {#{% if entreprise.getReservationOk() is null %}#}
+                            {#<a href="{{ path('dashboard_reservation_accept', {'idEntreprise': entreprise.getId(), 'result': 1}) }}" class="edit" onclick="return confirm('Voulez-vous vraiment accepter cette demande de stand ? L\'entreprise recevra ses codes d\'accès.');"><i data-feather="check"></i></a><br/>#}
+                            {#<a href="{{ path('dashboard_reservation_accept', {'idEntreprise': entreprise.getId(), 'result': 0}) }}" class="remove" onclick="return confirm('Voulez-vous vraiment refuser cette demande de stand ?');"><i data-feather="trash-2"></i></a>#}
+                        {#{% endif %}#}
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        {% if pagination is defined and pagination.nbPages > 1 %}
+            {% include 'backoffice/pagination.html.twig' %}
+        {% endif %}
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+{% endblock %}

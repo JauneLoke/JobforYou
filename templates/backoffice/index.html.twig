@@ -1,0 +1,65 @@
+{% extends 'backoffice/layout.html.twig' %}
+
+{% block dashboardContent %}
+    <div class="dashboard-section user-statistic-block">
+        {% if is_granted('ROLE_ADMIN') %}
+            <div class="user-statistic">
+                <i data-feather="command"></i>
+                <h3>{{ reservedCount }}</h3>
+                <span>Stands réservés</span>
+            </div>
+            <div class="user-statistic">
+                <i data-feather="file-text"></i>
+                <h3>{{ reservationCount }}</h3>
+                <span>Réser. soumises</span>
+            </div>
+            <div class="user-statistic">
+                <i data-feather="users"></i>
+                <h3>{{ emploisCount }}</h3>
+                <span>Emplois postés</span>
+            </div>
+        {% elseif is_granted('ROLE_ENTREPRISE') %}
+            <div class="user-statistic">
+                <i data-feather="command"></i>
+                <h3>{{ app.user.getEntreprise().getSurface() }} m²</h3>
+                <span>Surface réservée</span>
+            </div>
+            <div class="user-statistic">
+                <i data-feather="file-text"></i>
+                <h3>5</h3>
+                <span>Candidatures</span>
+            </div>
+            <div class="user-statistic">
+                <i data-feather="users"></i>
+                <h3>{{ emploisCount }}</h3>
+                <span>Emplois en ligne</span>
+            </div>
+        {% endif %}
+    </div>
+    <div class="dashboard-section dashboard-view-chart">
+        <canvas id="view-chart" width="400" height="200"></canvas>
+    </div>
+    <div class="dashboard-section dashboard-recent-activity">
+        <h4 class="title">Activités récentes</h4>
+        {% if notifications %}
+            {% for notification in notifications %}
+                <div class="activity-list">
+                    <i class="fas fa-bolt"></i>
+                    <div class="content">
+                        <h5>{{ notification.getLabel() }}</h5>
+                        <span class="time">{{ notification.getDateAdd()|date('\\L\\e d/m/Y \\à H:i') }}</span>
+                    </div>
+                    <div class="close-activity">
+                        <i class="fas fa-times"></i>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <div class="activity-list">
+                <div class="content">
+                    <h5>Aucune nouvelle notification !</h5>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}
